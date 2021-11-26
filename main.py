@@ -5,6 +5,7 @@ from discord.ext import commands
 import csv
 from urllib import request
 
+deez = "nuts"
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
