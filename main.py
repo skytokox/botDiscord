@@ -5,7 +5,6 @@ from discord.ext import commands
 import csv
 from urllib import request
 
-deez = "nuts"
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -99,6 +98,10 @@ async def covid(ctx, location: str = None, string: str = None):
     if int(ilosc_zakazen) - int(ilosc_zakazen_WA) > 0:
         embed.add_field(name="Ilość zakażeń:",
                         value=f'{ilosc_zakazen}, wzrost o {int(ilosc_zakazen) - int(ilosc_zakazen_WA)}({round((int(ilosc_zakazen) / int(ilosc_zakazen_WA) - 1) * 100, 1)}%)',inline=True)
+    elif int(ilosc_zakazen) - int(ilosc_zakazen_WA) ==  0:
+        embed.add_field(name="Ilość zakażeń:",
+                        value=f'{ilosc_zakazen}, brak wzrostu',
+                        inline=True)
     else:
         embed.add_field(name="Ilość zakażeń:",
                         value=f'{ilosc_zakazen}, spadek o {int(ilosc_zakazen_WA) - int(ilosc_zakazen)}({round((int(ilosc_zakazen) / int(ilosc_zakazen_WA) - 1) * 100, 1)}%)',
@@ -146,6 +149,10 @@ async def covid(ctx, location: str = None, string: str = None):
     if int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA) > 0:
         embed.add_field(name="Liczba pozytywnych testow:",
                         value=f'{ilosc_pozytywnych_testow}%, wzrost o {int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA)}%',
+                        inline=True)
+    elif int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA) == 0:
+        embed.add_field(name="Liczba pozytywnych testow:",
+                        value=f'{ilosc_pozytywnych_testow}%, brak wzrostu',
                         inline=True)
     else:
         embed.add_field(name="Liczba pozytywnych testow:",
