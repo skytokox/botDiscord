@@ -44,12 +44,6 @@ async def avatar(ctx, user: discord.Member = None):
         await ctx.send(user.avatar_url)
 
 @bot.command()
-async def pobierzdane(ctx):
-    url = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
-    date = datetime.datetime.now()
-    local_file = f'dane_powiat_{date.strftime("%d")}.{date.strftime("%m")}.{date.strftime("%Y")}.csv'
-    request.urlretrieve(url, f'./covid/{local_file}')
-@bot.command()
 async def covid(ctx, location: str = None, string: str = None):
     if string is None:
         date = datetime.datetime.now()
@@ -62,6 +56,11 @@ async def covid(ctx, location: str = None, string: str = None):
 
     if location is None:
         location = "Cały kraj"
+
+    url = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
+    dateofFile = datetime.datetime.now()
+    local_file = f'dane_powiat_{dateofFile.strftime("%d")}.{dateofFile.strftime("%m")}.{dateofFile.strftime("%Y")}.csv'
+    request.urlretrieve(url, f'./covid/{local_file}')
 
     dateWEEKAgo = date - datetime.timedelta(weeks=1)
     with open(f'./covid/dane_powiat_{date.strftime("%d")}.{date.strftime("%m")}.{date.strftime("%Y")}.csv',
@@ -117,6 +116,8 @@ async def covid(ctx, location: str = None, string: str = None):
         embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :purple_circle:', inline=True)
     elif 70 <= ilosc_zakazen_100k < 100:
         embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :brown_circle:', inline=True)
+    elif ilosc_zakazen_100k > 100:
+        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :orange_circle::bangbang:', inline=True)
 
     if int(ilosc_zgonow) - int(ilosc_zgonow_WA) > 0 and int(ilosc_zgonow_WA) != 0:
         embed.add_field(name="Ilość zgonów:",
