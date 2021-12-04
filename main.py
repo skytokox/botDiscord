@@ -11,7 +11,7 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-token = 'OTA0Nzk0MDEyMTQ0MjQ2Nzk1.YYAtFg.H5O-JqTQVHnmzWm5JccGpTXBZ7Y'
+token = 'OTA0Nzk0MDEyMTQ0MjQ2Nzk1.YYAtFg.ZS6QxeM50nLevesCCW9C4_7LJXI'
 
 bot = commands.Bot(command_prefix="!")
 
