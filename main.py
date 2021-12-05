@@ -1,5 +1,7 @@
 import datetime
 import logging
+import math
+
 import discord
 from discord.ext import commands
 import csv
@@ -55,6 +57,8 @@ async def covid(ctx, location: str = None, string: str = None):
             date = datetime.datetime(int(test[0]), int(test[1]), int(test[2]))
 
     if location is None:
+        location = "Cały kraj"
+    elif location == 'Polska':
         location = "Cały kraj"
 
     url = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
@@ -147,17 +151,17 @@ async def covid(ctx, location: str = None, string: str = None):
                         value=f'{ilosc_testow}, spadek o {int(ilosc_testow_WA) - int(ilosc_testow)}({round((int(ilosc_testow) / int(ilosc_testow_WA) - 1) * 100, 1)}%)',
                         inline=True)
 
-    if int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA) > 0:
+    if float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA) > 0:
         embed.add_field(name="Liczba pozytywnych testow:",
-                        value=f'{ilosc_pozytywnych_testow}%, wzrost o {int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA)}%',
+                        value=f'{ilosc_pozytywnych_testow}%, wzrost o {math.ceil(round(float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA), 1) * 10) / 10}%',
                         inline=True)
-    elif int(ilosc_pozytywnych_testow) - int(ilosc_pozytywnych_testow_WA) == 0:
+    elif float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA) == 0:
         embed.add_field(name="Liczba pozytywnych testow:",
                         value=f'{ilosc_pozytywnych_testow}%, brak wzrostu',
                         inline=True)
     else:
         embed.add_field(name="Liczba pozytywnych testow:",
-                        value=f'{ilosc_pozytywnych_testow}%, spadek o {int(ilosc_pozytywnych_testow_WA) - int(ilosc_pozytywnych_testow)}%',
+                        value=f'{ilosc_pozytywnych_testow}%, spadek o {math.ceil(round(float(ilosc_pozytywnych_testow_WA) - float(ilosc_pozytywnych_testow), 1) * 10) / 10}%',
                         inline=True)
     if date.strftime("%d") == datetime.datetime.now().strftime("%d"):
         embed.description = "Dzisiejsze statystyki COVID-19 od Ministerstwa Zdrowia"
