@@ -9,25 +9,22 @@ from zipfile import ZipFile
 from config import token
 
 date = datetime.datetime.today()
-
+date_str = date.strftime("_%d.%m.%Y")
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename=f'./logs/discord{date.strftime("_%d.%m.%Y")}.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename=f'./logs/discord{date_str}.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
-
 
 bot = commands.Bot(command_prefix="!")
 
 urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
 urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
 
-local_file_COVID = f'dane_powiat_{date.strftime("%d.%m.%Y")}.csv'
-local_file_VACCINES = f'szczepienia_{date.strftime("%d.%m.%Y")}.zip'
+local_file_COVID = f'dane_powiat_{date_str}.csv'
+local_file_VACCINES = f'szczepienia_{date_str}.zip'
 request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
 request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
-
-
 
 zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
 zipinfos = zipdata.infolist()
