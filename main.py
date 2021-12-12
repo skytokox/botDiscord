@@ -1,21 +1,40 @@
 import datetime
 import logging
-import math
 
 import discord
 from discord.ext import commands
 import csv
 from urllib import request
+from zipfile import ZipFile
+from config import token
+
+date = datetime.datetime.today()
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename=f'./logs/discord{date.strftime("_%d.%m.%Y")}.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-token = 'OTA0Nzk0MDEyMTQ0MjQ2Nzk1.YYAtFg.ZS6QxeM50nLevesCCW9C4_7LJXI'
 
 bot = commands.Bot(command_prefix="!")
+
+urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
+urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
+
+local_file_COVID = f'dane_powiat_{date.strftime("%d.%m.%Y")}.csv'
+local_file_VACCINES = f'szczepienia_{date.strftime("%d.%m.%Y")}.zip'
+request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
+request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
+
+
+
+zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
+zipinfos = zipdata.infolist()
+for zipinfo in zipinfos:
+    if 'rap_rcb_global_szczepienia.csv' in zipinfo.filename:
+        zipinfo.filename = f'./szczepienia/csv/{date.strftime("szczepienia_%d.%m.%Y.csv")}'
+        zipdata.extract(zipinfo)
 
 
 @bot.event
@@ -45,128 +64,99 @@ async def avatar(ctx, user: discord.Member = None):
         await ctx.send(f'Avatar uzytkownika: {user}')
         await ctx.send(user.avatar_url)
 
+
 @bot.command()
-async def covid(ctx, location: str = None, string: str = None):
-    if string is None:
-        date = datetime.datetime.now()
-    else:
-        test = string.split('.')
-        if int(test[0]) <= 31:
-            date = datetime.datetime(int(test[2]), int(test[1]), int(test[0]))
-        else:
-            date = datetime.datetime(int(test[0]), int(test[1]), int(test[2]))
-
-    if location is None:
-        location = "Cały kraj"
-    elif location == 'Polska':
-        location = "Cały kraj"
-
-    url = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
-    dateofFile = datetime.datetime.now()
-    local_file = f'dane_powiat_{dateofFile.strftime("%d")}.{dateofFile.strftime("%m")}.{dateofFile.strftime("%Y")}.csv'
-    request.urlretrieve(url, f'./covid/{local_file}')
-
+async def covid(ctx):
     dateWEEKAgo = date - datetime.timedelta(weeks=1)
-    with open(f'./covid/dane_powiat_{date.strftime("%d")}.{date.strftime("%m")}.{date.strftime("%Y")}.csv',
+    dateYesterday = date - datetime.timedelta(days=1)
+    with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
               'r') as file:
         reader = csv.reader(file, delimiter=";")
         for row in reader:
-            if location == row[1]:
-                ilosc_zakazen = row[2]
+            if "Cały kraj" == row[1]:
+                ilosc_zakazen = int(row[2])
                 ilosc_zakazen_100k = round(float(row[3]) * 10, 1)
-                ilosc_zgonow = row[4]
-                ilosc_zgonowCOVID = row[5]
-                ilosc_zgonowZCOVID = row[6]
-                ilosc_kwarantanna = row[9]
-                ilosc_testow = row[10]
+                ilosc_zgonow = int(row[4])
+                ilosc_kwarantanna = int(row[9])
+                ilosc_testow = int(row[10])
                 ilosc_pozytywnych_testow = round(int(row[2]) / int(row[10]) * 100, 1)
 
     with open(
-            f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d")}.{dateWEEKAgo.strftime("%m")}.{dateWEEKAgo.strftime("%Y")}.csv',
+            f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
             'r') as file:
         reader = csv.reader(file, delimiter=";")
         for row in reader:
-            if location == row[1]:
-                ilosc_zakazen_WA = row[2]
-                ilosc_zgonow_WA = row[4]
-                ilosc_testow_WA = row[10]
-                ilosc_pozytywnych_testow_WA = round(int(row[2]) / int(row[10]) * 100, 1)
+            if "Cały kraj" == row[1]:
+                ilosc_zakazen_WA = int(row[2])
+                ilosc_zgonow_WA = int(row[4])
+
+    with open(
+            f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
+            'r') as file:
+        reader = csv.reader(file, delimiter=";")
+        for row in reader:
+            if "Cały kraj" == row[1]:
+                ilosc_kwarantanna_Wczoraj = int(row[9])
+
+    with open(
+            f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
+            'r') as file:
+        reader = csv.reader(file, delimiter=";")
+        for row in reader:
+            if "liczba_szczepien_ogolem" != row[0]:
+                ilosc_szczepien_dzis = int(row[1])
+                ilosc_w_pelni_zaszczepionych = round(int(row[17]) / 38151000 * 100, 1)
+
+    if ilosc_zakazen > ilosc_zakazen_WA:
+        zmianaZK = f'o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100)}%** więcej niż tydzień temu'
+    elif ilosc_zakazen == ilosc_zakazen_WA:
+        zmianaZK = f'Bez zmian(tyle samo co tydzień temu)'
+    else:
+        zmianaZK = f'o **{round((ilosc_zakazen_WA / ilosc_zakazen - 1) * 100)}%** mniej niż tydzień temu'
+
+    if ilosc_zgonow > ilosc_zgonow_WA:
+        zmianaZG = f'o **{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}%** więcej niż tydzień temu'
+    elif ilosc_zakazen == ilosc_zakazen_WA:
+        zmianaZG = f'Bez zmian(tyle samo co tydzień temu)'
+    else:
+        zmianaZG = f'o **{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}%** mniej niż tydzień temu'
+
+    if ilosc_kwarantanna > ilosc_kwarantanna_Wczoraj:
+        zmianaKW = f'o **{ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj}** więcej niż wczoraj'
+    elif ilosc_kwarantanna == ilosc_kwarantanna_Wczoraj:
+        zmianaKW = f'Bez zmian(tyle samo co wczoraj)'
+    else:
+        zmianaKW = f'o **{(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}** mniej niż wczoraj'
+
+    embedColor = ""
+    match (ilosc_zakazen_100k):
+        case ilosc_zakazen_100k if ilosc_zakazen_100k <= 2:
+            embedColor = 0xadd8e6
+        case ilosc_zakazen_100k if 2 < ilosc_zakazen_100k <= 10:
+            embedColor = 0x00c400
+        case ilosc_zakazen_100k if 10 < ilosc_zakazen_100k <= 25:
+            embedColor = 0xffff00
+        case ilosc_zakazen_100k if 25 < ilosc_zakazen_100k <= 50:
+            embedColor = 0xff3333
+        case ilosc_zakazen_100k if 50 < ilosc_zakazen_100k <= 70:
+            embedColor = 0x9a009a
+        case ilosc_zakazen_100k if 70 < ilosc_zakazen_100k:
+            embedColor = 0x292929
+
     embed = discord.Embed(
         title="COVID-19",
-        description="Dzisiejsze statystyki COVID-19 od Ministerstwa Zdrowia",
-        color=discord.Color.purple()
+        description="Dzisiejsze statystyki COVID-19 z Ministerstwa Zdrowia",
+        color=embedColor
     )
     embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
-
-    if int(ilosc_zakazen) - int(ilosc_zakazen_WA) > 0:
-        embed.add_field(name="Ilość zakażeń:",
-                        value=f'{ilosc_zakazen}, wzrost o {int(ilosc_zakazen) - int(ilosc_zakazen_WA)}({round((int(ilosc_zakazen) / int(ilosc_zakazen_WA) - 1) * 100, 1)}%)',inline=True)
-    elif int(ilosc_zakazen) - int(ilosc_zakazen_WA) ==  0:
-        embed.add_field(name="Ilość zakażeń:",
-                        value=f'{ilosc_zakazen}, brak wzrostu',
-                        inline=True)
-    else:
-        embed.add_field(name="Ilość zakażeń:",
-                        value=f'{ilosc_zakazen}, spadek o {int(ilosc_zakazen_WA) - int(ilosc_zakazen)}({round((int(ilosc_zakazen) / int(ilosc_zakazen_WA) - 1) * 100, 1)}%)',
-                        inline=True)
-
-    if ilosc_zakazen_100k < 10:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :green_circle:', inline=True)
-    elif 10 <= ilosc_zakazen_100k < 25:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :yellow_circle:', inline=True)
-    elif 25 <= ilosc_zakazen_100k < 50:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :red_circle:', inline=True)
-    elif 50 <= ilosc_zakazen_100k < 70:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :purple_circle:', inline=True)
-    elif 70 <= ilosc_zakazen_100k < 100:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :brown_circle:', inline=True)
-    elif ilosc_zakazen_100k > 100:
-        embed.add_field(name="Ilość zakażeń na 100k:", value=f'{ilosc_zakazen_100k} :orange_circle::bangbang:', inline=True)
-
-    if int(ilosc_zgonow) - int(ilosc_zgonow_WA) > 0 and int(ilosc_zgonow_WA) != 0:
-        embed.add_field(name="Ilość zgonów:",
-                        value=f'{ilosc_zgonow}, wzrost o {int(ilosc_zgonow) - int(ilosc_zgonow_WA)}({round((int(ilosc_zgonow) / int(ilosc_zgonow_WA) - 1) * 100, 1)}%)',
-                        inline=False)
-    elif int(ilosc_zgonow) - int(ilosc_zgonow_WA) == 0:
-        embed.add_field(name="Ilość zgonów:", value=f'{ilosc_zgonow}, brak wzrostu', inline=False)
-    elif int(ilosc_zgonow_WA) == 0:
-        embed.add_field(name="Ilość zgonów:",
-                        value=f'{ilosc_zgonow}, wzrost o {int(ilosc_zgonow) - int(ilosc_zgonow_WA)}({round((int(ilosc_zgonow) / 1) * 100, 1)}%)',
-                        inline=False)
-    else:
-        embed.add_field(name="Ilość zgonów:",
-                        value=f'{ilosc_zgonow}, spadek o {int(ilosc_zgonow_WA) - int(ilosc_zgonow)}({round((int(ilosc_zgonow) / int(ilosc_zgonow_WA) - 1) * 100, 1)}%)',
-                        inline=False)
-
-    embed.add_field(name="Zgony z powodu \nCOVID-19", value=ilosc_zgonowCOVID, inline=True)
-    embed.add_field(name="Zgony z chorobami współistniejacymi:", value=ilosc_zgonowZCOVID, inline=True)
-    embed.add_field(name="Liczba osób na kwarantannie:", value=f'{ilosc_kwarantanna}', inline=False)
-
-    if int(ilosc_testow) - int(ilosc_testow_WA) > 0:
-        embed.add_field(name="Liczba wykonanych testów:",
-                        value=f'{ilosc_testow}, wzrost o {int(ilosc_testow) - int(ilosc_testow_WA)}({round((int(ilosc_testow) / int(ilosc_testow_WA) - 1) * 100, 1)}%)',
-                        inline=True)
-    else:
-        embed.add_field(name="Liczba wykonanych testów:",
-                        value=f'{ilosc_testow}, spadek o {int(ilosc_testow_WA) - int(ilosc_testow)}({round((int(ilosc_testow) / int(ilosc_testow_WA) - 1) * 100, 1)}%)',
-                        inline=True)
-
-    if float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA) > 0:
-        embed.add_field(name="Liczba pozytywnych testow:",
-                        value=f'{ilosc_pozytywnych_testow}%, wzrost o {math.ceil(round(float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA), 1) * 10) / 10}%',
-                        inline=True)
-    elif float(ilosc_pozytywnych_testow) - float(ilosc_pozytywnych_testow_WA) == 0:
-        embed.add_field(name="Liczba pozytywnych testow:",
-                        value=f'{ilosc_pozytywnych_testow}%, brak wzrostu',
-                        inline=True)
-    else:
-        embed.add_field(name="Liczba pozytywnych testow:",
-                        value=f'{ilosc_pozytywnych_testow}%, spadek o {math.ceil(round(float(ilosc_pozytywnych_testow_WA) - float(ilosc_pozytywnych_testow), 1) * 10) / 10}%',
-                        inline=True)
-    if date.strftime("%d") == datetime.datetime.now().strftime("%d"):
-        embed.description = "Dzisiejsze statystyki COVID-19 od Ministerstwa Zdrowia"
-    else:
-        embed.description = f'Statystyki COVID-19 na dzień: {date.strftime("%d")}.{date.strftime("%m")}.{date.strftime("%Y")}'
+    embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'Jest to {zmianaZK}', inline=False)
+    embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'Jest to {zmianaZG}', inline=False)
+    embed.add_field(name=f'Wykonano {ilosc_testow} testów :bar_chart:',
+                    value=f'W tym **{ilosc_pozytywnych_testow}%** jest pozytywnych', inline=False)
+    embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'Jest to {zmianaKW}',
+                    inline=False)
+    embed.add_field(name=f'Wykonano {ilosc_szczepien_dzis} szczepień :syringe:',
+                    value=f'W pełni zaszczepionych jest **{ilosc_w_pelni_zaszczepionych}%** Polaków', inline=False)
 
     await ctx.send(embed=embed)
 
