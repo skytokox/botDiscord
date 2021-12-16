@@ -188,7 +188,7 @@ class CovidData(commands.Cog):
         newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
 
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
-                  mode='r', encoding='utf-8') as file:
+                  mode='r', encoding='ISO-8859-1') as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
