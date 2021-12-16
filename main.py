@@ -8,8 +8,10 @@ import csv
 from urllib import request
 from urllib.request import urlopen
 from zipfile import ZipFile
-from config import token
+# from config import token
 from bs4 import BeautifulSoup
+import os
+token = os.environ.get('BOT_TOKEN')
 
 date = datetime.datetime.today()
 date_str = date.strftime("_%d.%m.%Y")
@@ -80,4 +82,4 @@ async def avatar(ctx, user: discord.Member = None):
 
 
 bot.load_extension('covid')
-bot.run(token)
+bot.run()
