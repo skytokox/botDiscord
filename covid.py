@@ -198,6 +198,7 @@ class CovidData(commands.Cog):
                     ilosc_kwarantanna = int(row[9])
                     ilosc_testow = int(row[10])
                     ilosc_pozytywnych_testow = round(int(row[2]) / int(row[10]) * 100, 1)
+                    print(ilosc_zakazen)
 
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
