@@ -23,31 +23,6 @@ logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix="!")
 
-urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
-urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
-urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
-
-local_file_COVID = f'dane_powiat{date_str}.csv'
-local_file_VACCINES = f'szczepienia{date_str}.zip'
-local_file_VARIANTS = f'warianty{date_str}.csv'
-request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
-request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
-
-page = urlopen(urlVARIANTS)
-soup = BeautifulSoup(page, 'html.parser')
-content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
-content_parent = content.parent.parent
-totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
-newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
-newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
-zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
-zipinfos = zipdata.infolist()
-for zipinfo in zipinfos:
-    if 'rap_rcb_global_szczepienia.csv' in zipinfo.filename:
-        zipinfo.filename = f'./szczepienia/csv/{date.strftime("szczepienia_%d.%m.%Y.csv")}'
-        zipdata.extract(zipinfo)
-
-x = 5
 
 
 @bot.event
@@ -82,6 +57,7 @@ async def avatar(ctx, user: discord.Member = None):
 @bot.command()
 async def time(ctx):
     await ctx.send(datetime.datetime.now())
+
 
 bot.load_extension('covid')
 bot.run(token)
