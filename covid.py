@@ -114,9 +114,9 @@ class CovidData(commands.Cog):
         match totalOmicronCount:
             case 1:
                 omCountTEXT = "zakażenie"
-            case omicronCount if 2 <= omicronCount <= 4:
+            case totalOmicronCount if 2 <= totalOmicronCount <= 4:
                 omCountTEXT = "zakażenia"
-            case omicronCount if 5 <= omicronCount:
+            case totalOmicronCount if 5 <= totalOmicronCount:
                 omCountTEXT = "zakażeń"
         if newOmicronCases == "":
             zmianaOM = "Jest to tyle samo co wczoraj"
