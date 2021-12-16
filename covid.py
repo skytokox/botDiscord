@@ -190,6 +190,7 @@ class CovidData(commands.Cog):
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
                   mode='r', encoding='ISO-8859-1') as file:
             reader = csv.reader(file, delimiter=";")
+            print(reader)
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_zakazen = int(row[2])
