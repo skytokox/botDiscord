@@ -79,7 +79,9 @@ async def avatar(ctx, user: discord.Member = None):
         await ctx.send(f'Avatar uzytkownika: {user}')
         await ctx.send(user.avatar_url)
 
-
+@bot.command()
+async def time(ctx):
+    await ctx.send(datetime.datetime.now())
 
 bot.load_extension('covid')
 bot.run(token)

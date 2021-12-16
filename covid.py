@@ -53,7 +53,7 @@ class CovidData(commands.Cog):
         dateYesterday = date - datetime.timedelta(days=1)
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
                   'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_zakazen = int(row[2])
@@ -66,7 +66,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_zakazen_WA = int(row[2])
@@ -75,7 +75,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_kwarantanna_Wczoraj = int(row[9])
@@ -83,7 +83,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "liczba_szczepien_ogolem" != row[0]:
                     ilosc_szczepien_dzis = int(row[1])
@@ -189,7 +189,7 @@ class CovidData(commands.Cog):
 
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
                   'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_zakazen = int(row[2])
@@ -202,7 +202,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_zakazen_WA = int(row[2])
@@ -211,7 +211,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_kwarantanna_Wczoraj = int(row[9])
@@ -219,7 +219,7 @@ class CovidData(commands.Cog):
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
                 'r') as file:
-            reader = csv.reader(file, delimiter=";")
+            reader = csv.reader(file, dialect="excel", delimiter=";")
             for row in reader:
                 if "liczba_szczepien_ogolem" != row[0]:
                     ilosc_szczepien_dzis = int(row[1])
