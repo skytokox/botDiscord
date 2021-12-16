@@ -177,7 +177,16 @@ class CovidData(commands.Cog):
         date = datetime.datetime.today()
         dateWEEKAgo = date - datetime.timedelta(weeks=1)
         dateYesterday = date - datetime.timedelta(days=1)
+        date_str = date.strftime("_%d.%m.%Y")
+
+        urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
+        urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
+
+        local_file_COVID = f'dane_powiat{date_str}.csv'
+        local_file_VACCINES = f'szczepienia{date_str}.zip'
+        request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
+        request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
 
         page = urlopen(urlVARIANTS)
         soup = BeautifulSoup(page, 'html.parser')
@@ -186,6 +195,13 @@ class CovidData(commands.Cog):
         totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
         newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
         newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
+        zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
+        zipinfos = zipdata.infolist()
+        for zipinfo in zipinfos:
+            if 'rap_rcb_global_szczepienia.csv' in zipinfo.filename:
+                zipinfo.filename = f'./szczepienia/csv/{date.strftime("szczepienia_%d.%m.%Y.csv")}'
+                zipdata.extract(zipinfo)
+
 
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
                   mode='r', encoding='ISO-8859-1') as file:
