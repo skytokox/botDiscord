@@ -162,8 +162,8 @@ class CovidData(commands.Cog):
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 10
-        minute = 30
+        hour = 23
+        minute = 2
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)

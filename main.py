@@ -82,4 +82,4 @@ async def avatar(ctx, user: discord.Member = None):
 
 
 bot.load_extension('covid')
-bot.run()
+bot.run(token)
