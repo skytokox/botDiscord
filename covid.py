@@ -163,7 +163,7 @@ class CovidData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 23
-        minute = 2
+        minute = 4
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
