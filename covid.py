@@ -205,7 +205,7 @@ class CovidData(commands.Cog):
 
 
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
-                  mode='r', encoding='ISO-8859-1') as file:
+                  mode='r') as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 print(row)
