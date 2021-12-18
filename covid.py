@@ -52,7 +52,7 @@ class CovidData(commands.Cog):
         dateWEEKAgo = date - datetime.timedelta(weeks=1)
         dateYesterday = date - datetime.timedelta(days=1)
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
-                  'r') as file:
+                  'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -65,7 +65,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -74,7 +74,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -82,7 +82,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "liczba_szczepien_ogolem" != row[0]:
@@ -162,8 +162,8 @@ class CovidData(commands.Cog):
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 23
-        minute = 4
+        hour = 11
+        minute = 30
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
