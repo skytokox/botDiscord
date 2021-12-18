@@ -210,7 +210,7 @@ class CovidData(commands.Cog):
 
 
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
-                  mode='r') as file:
+                  mode='r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -223,7 +223,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -232,7 +232,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
@@ -240,7 +240,7 @@ class CovidData(commands.Cog):
 
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
-                'r') as file:
+                'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "liczba_szczepien_ogolem" != row[0]:
