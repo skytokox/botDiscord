@@ -23,7 +23,7 @@ class CovidData(commands.Cog):
 
         date = datetime.datetime.today()
         date_str = date.strftime("_%d.%m.%Y")
-        target_channel = 820650672697507870
+        target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
 
         urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
@@ -165,8 +165,8 @@ class CovidData(commands.Cog):
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 15
-        minute = 0
+        hour = 9
+        minute = 30
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
