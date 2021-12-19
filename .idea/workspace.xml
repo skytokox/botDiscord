@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +122,8 @@
       <workItem from="1639666135635" duration="21996000" />
       <workItem from="1639759851173" duration="2711000" />
       <workItem from="1639836244689" duration="2788000" />
-      <workItem from="1639858666464" duration="708000" />
+      <workItem from="1639858666464" duration="1318000" />
+      <workItem from="1639924941493" duration="210000" />
     </task>
     <task id="LOCAL-00001" summary="Update discord.log">
       <created>1637958095868</created>
@@ -361,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639858913785</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Update discord.log">
+      <created>1639859390533</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1639859390533</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

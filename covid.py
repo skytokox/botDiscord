@@ -23,7 +23,7 @@ class CovidData(commands.Cog):
 
         date = datetime.datetime.today()
         date_str = date.strftime("_%d.%m.%Y")
-        target_channel = 868423228853456966
+        target_channel = 820650672697507870
         message_channel = self.bot.get_channel(target_channel)
 
         urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
@@ -40,7 +40,10 @@ class CovidData(commands.Cog):
         content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
         content_parent = content.parent.parent
         totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
-        newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
+        try:
+            newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
+        except:
+            newOmicronCasesTXT = "0"
         newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
         zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
         zipinfos = zipdata.infolist()
@@ -90,25 +93,25 @@ class CovidData(commands.Cog):
                     ilosc_w_pelni_zaszczepionych = round(int(row[17]) / 38151000 * 100, 1)
 
         if ilosc_zakazen > ilosc_zakazen_WA:
-            zmianaZK = f'o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100)}%** więcej niż tydzień temu'
+            zmianaZK = f':arrow_up: Jest to o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100)}%** więcej niż tydzień temu'
         elif ilosc_zakazen == ilosc_zakazen_WA:
-            zmianaZK = f'Bez zmian(tyle samo co tydzień temu)'
+            zmianaZK = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
         else:
-            zmianaZK = f'o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100) * -1}%** mniej niż tydzień temu'
+            zmianaZK = f':arrow_down: Jest to o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100) * -1}%** mniej niż tydzień temu'
 
         if ilosc_zgonow > ilosc_zgonow_WA:
-            zmianaZG = f'o **{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}%** więcej niż tydzień temu'
+            zmianaZG = f':arrow_up: Jest to o **{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}%** więcej niż tydzień temu'
         elif ilosc_zakazen == ilosc_zakazen_WA:
-            zmianaZG = f'Bez zmian(tyle samo co tydzień temu)'
+            zmianaZG = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
         else:
-            zmianaZG = f'o **{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}%** mniej niż tydzień temu'
+            zmianaZG = f':arrow_down: Jest to o **{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}%** mniej niż tydzień temu'
 
         if ilosc_kwarantanna > ilosc_kwarantanna_Wczoraj:
-            zmianaKW = f'o **{ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj}** więcej niż wczoraj'
+            zmianaKW = f':arrow_up: Jest to o **{ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj}** więcej niż wczoraj'
         elif ilosc_kwarantanna == ilosc_kwarantanna_Wczoraj:
-            zmianaKW = f'Bez zmian(tyle samo co wczoraj)'
+            zmianaKW = f':arrow_right: Bez zmian(tyle samo co wczoraj)'
         else:
-            zmianaKW = f'o **{(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}** mniej niż wczoraj'
+            zmianaKW = f':arrow_down: Jest to o **{(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}** mniej niż wczoraj'
 
         omCountTEXT = ""
         match totalOmicronCount:
@@ -118,10 +121,10 @@ class CovidData(commands.Cog):
                 omCountTEXT = "zakażenia"
             case totalOmicronCount if 5 <= totalOmicronCount:
                 omCountTEXT = "zakażeń"
-        if newOmicronCases == "":
-            zmianaOM = "Jest to tyle samo co wczoraj"
+        if newOmicronCases == 0:
+            zmianaOM = ":arrow_right: Jest to **tyle samo** co wczoraj"
         else:
-            zmianaOM = f'o **{newOmicronCases}** więcej niż wczoraj'
+            zmianaOM = f':arrow_up: Jest to o **{newOmicronCases}** więcej niż wczoraj'
 
         embedColor = ""
         match (ilosc_zakazen_100k):
@@ -162,8 +165,8 @@ class CovidData(commands.Cog):
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 9
-        minute = 30
+        hour = 14
+        minute = 48
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
