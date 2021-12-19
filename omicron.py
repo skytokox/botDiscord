@@ -42,8 +42,15 @@ class OmicronData(commands.Cog):
         if totalOmicronCount != lastUpdatedCount:
             newOmicronCases = totalOmicronCount - lastUpdatedCount
             lastUpdatedCount = totalOmicronCount
+            match newOmicronCases:
+                case 1:
+                    omCountTEXT = "zakażenie"
+                case totalOmicronCount if 2 <= totalOmicronCount <= 4:
+                    omCountTEXT = "zakażenia"
+                case totalOmicronCount if 5 <= totalOmicronCount:
+                    omCountTEXT = "zakażeń"
             embed = discord.Embed(
-                title=f'Wykryto {newOmicronCases} nowych przypadków wariantu Omikron',
+                title=f':bangbang:Wykryto {newOmicronCases} nowe {omCountTEXT} wariantem Omikron<:microbe_2:921081559220629534>:bangbang:',
                 description=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}',
                 color=discord.colour.Color.orange()
             )
@@ -61,8 +68,8 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 19
-        minute = 58
+        hour = 20
+        minute = 3
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
