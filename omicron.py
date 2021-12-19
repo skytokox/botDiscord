@@ -56,7 +56,7 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 17
+        hour = 18
         minute = 11
         seconds = 0
         now = datetime.datetime.now()
