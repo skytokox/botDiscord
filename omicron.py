@@ -44,16 +44,17 @@ class OmicronData(commands.Cog):
             lastUpdatedCount = totalOmicronCount
             match newOmicronCases:
                 case 1:
-                    omCountTEXT = "zakażenie"
+                    omCountTEXT = " nowe zakażenie"
                 case totalOmicronCount if 2 <= totalOmicronCount <= 4:
-                    omCountTEXT = "zakażenia"
+                    omCountTEXT = " nowe zakażenia"
                 case totalOmicronCount if 5 <= totalOmicronCount:
-                    omCountTEXT = "zakażeń"
+                    omCountTEXT = " nowych zakażeń"
             embed = discord.Embed(
-                title=f':bangbang:Wykryto {newOmicronCases} nowe {omCountTEXT} wariantem Omikron<:microbe_2:921081559220629534>:bangbang:',
+                title=f'Wykryto {newOmicronCases}{omCountTEXT} wariantem Omikron!<:microbe_2:921081559220629534>',
                 description=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}',
                 color=discord.colour.Color.orange()
             )
+            embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
             # embed.add_field(name="", value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
             await message_channel.send(embed=embed)
             file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
@@ -69,7 +70,7 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 20
-        minute = 3
+        minute = 7
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
