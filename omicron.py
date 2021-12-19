@@ -61,11 +61,11 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 19
-        minute = 24
+        minute = 25
         seconds = 0
         now = datetime.datetime.now()
-        print((future - now).seconds)
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
+        print((future - now).seconds)
         if now.hour >= hour and now.minute > minute:
             future += datetime.timedelta(days=1)
         await asyncio.sleep((future - now).seconds)
