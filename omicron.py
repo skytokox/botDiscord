@@ -28,7 +28,7 @@ class OmicronData(commands.Cog):
         message_channel = self.bot.get_channel(target_channel)
 
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
-        lastUpdatedCount = 7
+        lastUpdatedCount = 6
         page = urlopen(urlVARIANTS)
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
@@ -39,7 +39,7 @@ class OmicronData(commands.Cog):
         except:
             newOmicronCasesTXT = "0"
         newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
-
+        print(f'Liczba omikrona - {lastUpdatedCount}')
         if totalOmicronCount != lastUpdatedCount:
             newOmicronCases = lastUpdatedCount - totalOmicronCount
             lastUpdatedCount = totalOmicronCount
