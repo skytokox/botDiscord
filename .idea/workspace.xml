@@ -21,7 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/discord_19.12.2021.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/discord_19.12.2021.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" beforeDir="false" afterPath="$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,14 +126,7 @@
       <workItem from="1639759851173" duration="2711000" />
       <workItem from="1639836244689" duration="2788000" />
       <workItem from="1639858666464" duration="1318000" />
-      <workItem from="1639924941493" duration="12932000" />
-    </task>
-    <task id="LOCAL-00018" summary="Update discord.log">
-      <created>1639697775375</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1639697775375</updated>
+      <workItem from="1639924941493" duration="13565000" />
     </task>
     <task id="LOCAL-00019" summary="Update discord.log">
       <created>1639698044043</created>
@@ -468,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639945405446</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="Update discord.log">
+      <created>1639945531374</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1639945531374</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -494,6 +497,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Update discord.log" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1639935953588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1639946076384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
