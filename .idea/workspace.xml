@@ -123,14 +123,7 @@
       <workItem from="1639759851173" duration="2711000" />
       <workItem from="1639836244689" duration="2788000" />
       <workItem from="1639858666464" duration="1318000" />
-      <workItem from="1639924941493" duration="12805000" />
-    </task>
-    <task id="LOCAL-00017" summary="Update discord.log">
-      <created>1639697623482</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1639697623482</updated>
+      <workItem from="1639924941493" duration="12932000" />
     </task>
     <task id="LOCAL-00018" summary="Update discord.log">
       <created>1639697775375</created>
@@ -468,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639945297271</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="Update discord.log">
+      <created>1639945405446</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1639945405446</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

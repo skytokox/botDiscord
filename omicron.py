@@ -34,7 +34,7 @@ class OmicronData(commands.Cog):
         content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
         content_parent = content.parent.parent
         totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
-        color = [random.random() * 255, random.random() * 255, random.random() * 255]
+        color = [int(random.random() * 255), int(random.random() * 255), int(random.random() * 255)]
         try:
             file = open(f'./omicron/omicron{date_str}.txt', 'r', encoding="windows-1250")
             lastUpdatedCount = int(re.findall(r'\d+', file.read())[3])
@@ -73,7 +73,7 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 20
-        minute = 24
+        minute = 26
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
