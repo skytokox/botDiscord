@@ -24,7 +24,7 @@ class OmicronData(commands.Cog):
     async def omicronUpdate(self):
         date = datetime.datetime.now()
         date_str = date.strftime("_%d.%m.%Y")
-        target_channel = 820650672697507870
+        target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
 
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
@@ -59,12 +59,11 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 18
-        minute = 46
-        seconds = 40
+        hour = 19
+        minute = 30
+        seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
-        print((future - now).seconds)
         if now.hour >= hour and now.minute > minute:
             future += datetime.timedelta(days=1)
         await asyncio.sleep((future - now).seconds)
