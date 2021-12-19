@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +123,7 @@
       <workItem from="1639759851173" duration="2711000" />
       <workItem from="1639836244689" duration="2788000" />
       <workItem from="1639858666464" duration="1318000" />
-      <workItem from="1639924941493" duration="4881000" />
+      <workItem from="1639924941493" duration="4993000" />
     </task>
     <task id="LOCAL-00001" summary="Update discord.log">
       <created>1637958095868</created>
@@ -432,7 +433,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639933581884</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Update discord.log">
+      <created>1639933686057</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1639933686057</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

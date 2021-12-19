@@ -41,7 +41,7 @@ class OmicronData(commands.Cog):
         newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
         print(f'Liczba omikrona - {lastUpdatedCount}')
         if totalOmicronCount != lastUpdatedCount:
-            newOmicronCases = lastUpdatedCount - totalOmicronCount
+            newOmicronCases = totalOmicronCount - lastUpdatedCount
             lastUpdatedCount = totalOmicronCount
             embed = discord.Embed(
                 title="test",
@@ -57,7 +57,7 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 17
-        minute = 9
+        minute = 11
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
