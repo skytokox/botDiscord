@@ -55,7 +55,7 @@ class OmicronData(commands.Cog):
             embed = discord.Embed(
                 title=f'Wykryto {newOmicronCases}{omCountTEXT} wariantem Omikron!<:microbe_2:921081559220629534>',
                 description=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}',
-                color=color
+                color=discord.Color(color[0])
             )
             embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
             # embed.add_field(name="", value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
@@ -73,7 +73,7 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 20
-        minute = 19
+        minute = 22
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
