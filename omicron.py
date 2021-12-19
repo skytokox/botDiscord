@@ -24,7 +24,7 @@ class OmicronData(commands.Cog):
     async def omicronUpdate(self):
         date = datetime.datetime.now()
         date_str = date.strftime("_%d.%m.%Y")
-        target_channel = 868423228853456966
+        target_channel = 820650672697507870
         message_channel = self.bot.get_channel(target_channel)
 
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
