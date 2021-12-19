@@ -28,18 +28,17 @@ class OmicronData(commands.Cog):
         message_channel = self.bot.get_channel(target_channel)
 
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
-        lastUpdatedCount = 6
         page = urlopen(urlVARIANTS)
         soup = BeautifulSoup(page, 'html.parser')
         content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
         content_parent = content.parent.parent
         totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
         try:
-            newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
+            file = open(f'./omicron/omicron{date_str}.txt', 'r', encoding="windows-1250")
+            lastUpdatedCount = int(re.findall(r'\d+', file.read())[3])
         except:
-            newOmicronCasesTXT = "0"
-        newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
-        print(f'Liczba omikrona - {lastUpdatedCount}')
+            lastUpdatedCount = totalOmicronCount
+
         if totalOmicronCount != lastUpdatedCount:
             newOmicronCases = totalOmicronCount - lastUpdatedCount
             lastUpdatedCount = totalOmicronCount
@@ -50,15 +49,19 @@ class OmicronData(commands.Cog):
             )
             embed.add_field(name=f'Wykryto {newOmicronCases} nowych przypadków wariantu Omikron', value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
             await message_channel.send(embed=embed)
-            print('NOWY OMIKRON!!!')
+            file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
+            file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {lastUpdatedCount}')
+            file.close()
         else:
-            print('dzialam sobie ale nie ma nowego omikrona')
+            file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
+            file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {totalOmicronCount}')
+            file.close()
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 18
-        minute = 11
-        seconds = 0
+        minute = 46
+        seconds = 40
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         print((future - now).seconds)

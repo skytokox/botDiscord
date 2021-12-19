@@ -1,15 +1,9 @@
-import asyncio
+
 import datetime
 import logging
-import re
 import discord
 from discord.ext import commands, tasks
-import csv
-from urllib import request
-from urllib.request import urlopen
-from zipfile import ZipFile
 # from config import token
-from bs4 import BeautifulSoup
 import os
 token = os.environ.get('BOT_TOKEN')
 
