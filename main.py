@@ -60,4 +60,5 @@ async def time(ctx):
 
 
 bot.load_extension('covid')
+bot.load_extension('omicron')
 bot.run(token)
