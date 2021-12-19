@@ -7,7 +7,7 @@ class papiez(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.papiez24h.start()
+        self.ping2137.start()
 
 
 
@@ -24,7 +24,7 @@ class papiez(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 20
-        minute = 45
+        minute = 56
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
