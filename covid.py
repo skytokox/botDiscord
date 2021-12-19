@@ -147,26 +147,26 @@ class CovidData(commands.Cog):
             color=embedColor
         )
         embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
-        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'Jest to {zmianaZK}',
+        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}',
                         inline=False)
         embed.add_field(
             name=f'Mamy {totalOmicronCount} {omCountTEXT} wariantem omikron <:microbe_2:921081559220629534>',
-            value=f'Jest to {zmianaOM}', inline=False)
-        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'Jest to {zmianaZG}', inline=False)
+            value=f'{zmianaOM}', inline=False)
+        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}', inline=False)
+        embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'{zmianaKW}',
+                        inline=False)
         embed.add_field(name=f'Wykonano {ilosc_testow} testów :bar_chart:',
                         value=f'W tym **{ilosc_pozytywnych_testow}%** jest pozytywnych', inline=False)
-        embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'Jest to {zmianaKW}',
-                        inline=False)
         embed.add_field(name=f'Wykonano {ilosc_szczepien_dzis} szczepień :syringe:',
                         value=f'W pełni zaszczepionych jest **{ilosc_w_pelni_zaszczepionych}%** Polaków', inline=False)
 
-        await message_channel.send(embed=embed)
+        await ctx.send(embed=embed)
 
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 14
-        minute = 48
+        minute = 51
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
