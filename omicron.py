@@ -51,15 +51,17 @@ class OmicronData(commands.Cog):
             file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
             file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {lastUpdatedCount}')
             file.close()
+            print('Nowy omikron!')
         else:
             file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
             file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {totalOmicronCount}')
             file.close()
+            print('Tyle samo omikrona!')
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 19
-        minute = 38
+        minute = 56
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
