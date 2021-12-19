@@ -61,9 +61,10 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 19
-        minute = 56
+        minute = 24
         seconds = 0
         now = datetime.datetime.now()
+        print((future - now).seconds)
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         if now.hour >= hour and now.minute > minute:
             future += datetime.timedelta(days=1)
