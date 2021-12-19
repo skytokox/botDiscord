@@ -62,8 +62,8 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 19
-        minute = 55
-        seconds = 0
+        minute = 58
+        seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         print((future - now).seconds)
