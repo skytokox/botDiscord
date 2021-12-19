@@ -20,7 +20,7 @@ class OmicronData(commands.Cog):
 
 
 
-    @tasks.loop(minutes=15)
+    @tasks.loop(minutes=5)
     async def omicronUpdate(self):
         date = datetime.datetime.now()
         date_str = date.strftime("_%d.%m.%Y")
@@ -55,8 +55,8 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 16
-        minute = 39
+        hour = 17
+        minute = 5
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
