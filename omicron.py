@@ -43,10 +43,10 @@ class OmicronData(commands.Cog):
             newOmicronCases = totalOmicronCount - lastUpdatedCount
             lastUpdatedCount = totalOmicronCount
             embed = discord.Embed(
-                title="Nowy przypadek wariantu Omikron w Polsce!",
+                title=f'Wykryto {newOmicronCases} nowych przypadków wariantu Omikron',
                 color=discord.colour.Color.orange()
             )
-            embed.add_field(name=f'Wykryto {newOmicronCases} nowych przypadków wariantu Omikron', value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
+            embed.add_field(name="", value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
             await message_channel.send(embed=embed)
             file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
             file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {lastUpdatedCount}')
@@ -61,7 +61,7 @@ class OmicronData(commands.Cog):
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 19
-        minute = 25
+        minute = 30
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
