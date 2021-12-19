@@ -160,13 +160,13 @@ class CovidData(commands.Cog):
         embed.add_field(name=f'Wykonano {ilosc_szczepien_dzis} szczepień :syringe:',
                         value=f'W pełni zaszczepionych jest **{ilosc_w_pelni_zaszczepionych}%** Polaków', inline=False)
 
-        await ctx.send(embed=embed)
+        await message_channel.send(embed=embed)
 
     @covidUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 14
-        minute = 51
+        hour = 15
+        minute = 0
         seconds = 30
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
