@@ -1,6 +1,7 @@
 import asyncio
 import csv
 import datetime
+import random
 import re
 from urllib import request
 from urllib.request import urlopen
@@ -33,6 +34,7 @@ class OmicronData(commands.Cog):
         content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
         content_parent = content.parent.parent
         totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
+        color = [random.random() * 255, random.random() * 255, random.random() * 255]
         try:
             file = open(f'./omicron/omicron{date_str}.txt', 'r', encoding="windows-1250")
             lastUpdatedCount = int(re.findall(r'\d+', file.read())[3])
@@ -42,6 +44,7 @@ class OmicronData(commands.Cog):
         if totalOmicronCount != lastUpdatedCount:
             newOmicronCases = totalOmicronCount - lastUpdatedCount
             lastUpdatedCount = totalOmicronCount
+            omCountTEXT = ""
             match newOmicronCases:
                 case 1:
                     omCountTEXT = " nowe zakażenie"
@@ -52,7 +55,7 @@ class OmicronData(commands.Cog):
             embed = discord.Embed(
                 title=f'Wykryto {newOmicronCases}{omCountTEXT} wariantem Omikron!<:microbe_2:921081559220629534>',
                 description=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}',
-                color=discord.colour.Color.orange()
+                color=color
             )
             embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
             # embed.add_field(name="", value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
