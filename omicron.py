@@ -49,12 +49,14 @@ class OmicronData(commands.Cog):
                 color=discord.colour.Color.orange()
             )
             embed.add_field(name=f'Wykryto {newOmicronCases} nowych przypadków wariantu Omikron', value=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}', inline=False)
-
+            print('NOWY OMIKRON!!!')
+        else:
+            print('dzialam sobie ale nie ma nowego omikrona')
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
         hour = 16
-        minute = 38
+        minute = 39
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
