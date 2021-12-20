@@ -20,6 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -123,6 +125,8 @@
       <workItem from="1639836244689" duration="2788000" />
       <workItem from="1639858666464" duration="1318000" />
       <workItem from="1639924941493" duration="15171000" />
+      <workItem from="1639992688781" duration="918000" />
+      <workItem from="1640042191178" duration="485000" />
     </task>
     <task id="LOCAL-00026" summary="Update discord.log">
       <created>1639699543121</created>

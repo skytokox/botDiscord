@@ -101,7 +101,7 @@ class CovidData(commands.Cog):
 
         if ilosc_zgonow > ilosc_zgonow_WA:
             zmianaZG = f':arrow_up: Jest to o **{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}%** więcej niż tydzień temu'
-        elif ilosc_zakazen == ilosc_zakazen_WA:
+        elif ilosc_zgonow == ilosc_zgonow_WA:
             zmianaZG = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
         else:
             zmianaZG = f':arrow_down: Jest to o **{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}%** mniej niż tydzień temu'
@@ -167,7 +167,7 @@ class CovidData(commands.Cog):
         await self.bot.wait_until_ready()
         hour = 9
         minute = 30
-        seconds = 30
+        seconds = 15
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         print((future - now).seconds)
@@ -259,7 +259,7 @@ class CovidData(commands.Cog):
 
         if ilosc_zgonow > ilosc_zgonow_WA:
             zmianaZG = f':arrow_up: Jest to o **{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}%** więcej niż tydzień temu'
-        elif ilosc_zakazen == ilosc_zakazen_WA:
+        elif ilosc_zgonow == ilosc_zgonow_WA:
             zmianaZG = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
         else:
             zmianaZG = f':arrow_down: Jest to o **{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}%** mniej niż tydzień temu'
