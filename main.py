@@ -3,9 +3,8 @@ import datetime
 import logging
 import discord
 from discord.ext import commands, tasks
-# from config import token
-import os
-token = os.environ.get('BOT_TOKEN')
+from config import token
+
 
 date = datetime.datetime.today()
 date_str = date.strftime("_%d.%m.%Y")
