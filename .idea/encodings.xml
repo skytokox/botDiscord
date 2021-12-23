@@ -3,5 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/covid/dane_powiat_18.12.2021.csv" charset="windows-1250" />
     <file url="file://$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" charset="windows-1250" />
+    <file url="file://$PROJECT_DIR$/omicron/omicron_23.12.2021.txt" charset="windows-1250" />
   </component>
 </project>
