@@ -167,7 +167,7 @@ class CovidData(commands.Cog):
         await self.bot.wait_until_ready()
         hour = 9
         minute = 30
-        seconds = 15
+        seconds = 25
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         print((future - now).seconds)
