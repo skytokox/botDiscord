@@ -26,9 +26,7 @@ class OmicronData(commands.Cog):
         date = datetime.datetime.now()
         date_str = date.strftime("_%d.%m.%Y")
         target_channel = 868423228853456966
-        dev_channel = 923615011350384650
         message_channel = self.bot.get_channel(target_channel)
-        dev_channel = self.bot.get_channel(dev_channel)
 
         urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
         page = urlopen(urlVARIANTS)
@@ -64,18 +62,16 @@ class OmicronData(commands.Cog):
             file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {lastUpdatedCount}')
             file.close()
             print(f'Nowy omikron![{totalOmicronCount}]')
-            await dev_channel.send(embed=embed)
         else:
             file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
             file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {totalOmicronCount}')
             file.close()
             print(f'Tyle samo omikrona![{totalOmicronCount}]')
-            await dev_channel.send(f'Tyle samo omikrona![{totalOmicronCount}]')
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 16
-        minute = 45
+        hour = 0
+        minute = 0
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)

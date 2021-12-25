@@ -4,6 +4,7 @@ import logging
 import discord
 from discord.ext import commands, tasks
 from config import token
+import time
 
 
 date = datetime.datetime.today()
@@ -23,36 +24,8 @@ async def on_ready():
     print("Zalogowano jako: " + bot.user.name)
 
 
-
-
-@bot.command()
-async def nub(ctx, user: discord.Member = None):
-    if user is None:
-        if str(ctx.author) == ".sky#9999":
-            await ctx.send(f'{ctx.author} nie jest nubem')
-        else:
-            await ctx.send(f'{ctx.author} jest nubem')
-    if str(user) == "piotreee#9595":
-        await ctx.send(f'{user} jest nubem')
-    else:
-        await ctx.send(f'{user} nie jest nubem')
-
-
-@bot.command()
-async def avatar(ctx, user: discord.Member = None):
-    if user is None:
-        await ctx.send(f'Avatar uzytkownika: {ctx.author}')
-        await ctx.send(ctx.author.avatar_url)
-    else:
-        await ctx.send(f'Avatar uzytkownika: {user}')
-        await ctx.send(user.avatar_url)
-
-@bot.command()
-async def time(ctx):
-    await ctx.send(datetime.datetime.now())
-
-
 bot.load_extension('covid')
 bot.load_extension('omicron')
 bot.load_extension('papiez')
+bot.load_extension('other')
 bot.run(token)

@@ -16,7 +16,7 @@ class papiez(commands.Cog):
     async def ping2137(self):
         target_channel = 335070356941438977
         message_channel = self.bot.get_channel(target_channel)
-
+        await asyncio.sleep(round(self.bot.latency * 10))
         await message_channel.send('<@&793218650563018794>')
 
 
