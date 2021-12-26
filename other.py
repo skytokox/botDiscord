@@ -1,4 +1,6 @@
 import datetime
+import random
+
 import discord
 from discord.ext import commands, tasks
 
@@ -38,6 +40,13 @@ class Other(commands.Cog):
         t = await ctx.send('Pong!')
         ping = (t.created_at - ctx.message.created_at).microseconds / 1000
         await t.edit(content=f'Pong! - ping wynosi {ping}ms')
+
+
+    @commands.command()
+    async def choose(self, ctx, *, content):
+        options = content.split('/')
+        selected = random.choice(options)
+        await ctx.send(f'Wybrałem {selected}!')
 
 
 def setup(bot):
