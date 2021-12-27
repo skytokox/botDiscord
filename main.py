@@ -15,7 +15,7 @@ handler = logging.FileHandler(filename=f'./logs/discord{date_str}.log', encoding
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
-bot = commands.Bot(command_prefix="!")
+bot = commands.Bot(command_prefix="!", help_command=None)
 
 
 

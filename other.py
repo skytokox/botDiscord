@@ -41,12 +41,31 @@ class Other(commands.Cog):
         ping = (t.created_at - ctx.message.created_at).microseconds / 1000
         await t.edit(content=f'Pong! - ping wynosi {ping}ms')
 
-
     @commands.command()
     async def choose(self, ctx, *, content):
         options = content.split('/')
         selected = random.choice(options)
         await ctx.send(f'Wybrałem {selected}!')
+
+    @commands.command()
+    async def help(self, ctx):
+        color = [int(random.random() * 255), int(random.random() * 255), int(random.random() * 255)]
+        embed = discord.Embed(
+            title='Cloudy',
+            description='Informacje na temat komend w bocie',
+            color=discord.Color.from_rgb(color[0], color[1], color[2])
+        )
+        embed.add_field(name='Ogólne', value="Ogólne komendy", inline=False)
+        embed.add_field(name='!avatar', value='Pokazuje avatar użytkownika, prawidłowe użycie !avatar <ping>',
+                        inline=False)
+        embed.add_field(name='!time', value='Pokazuje czas na hoscie bota, prawidłowe użycie !time', inline=False)
+        embed.add_field(name='!ping', value='Pokazuje ping bota, prawidłowe użycie !ping', inline=False)
+        embed.add_field(name='!choose', value='Wybiera jedną z opcji, prawidłowe użycie !choose opcja1/opcja2/opcja3',
+                        inline=False)
+        embed.add_field(name='COVID', value="Komendy związane z COVID", inline=False)
+        embed.add_field(name='!covid', value='Pokazuje dzisiejsze statystki dla całego kraju, prawidłowe użycie !covid')
+
+        await ctx.send(embed=embed)
 
 
 def setup(bot):
