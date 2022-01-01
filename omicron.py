@@ -1,6 +1,7 @@
 import asyncio
 import csv
 import datetime
+import json
 import random
 import re
 from urllib import request
@@ -12,38 +13,48 @@ from bs4 import BeautifulSoup
 from discord.ext import commands, tasks
 
 
-
 class OmicronData(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
         self.omicronUpdate.start()
 
-
-
     @tasks.loop(minutes=15)
     async def omicronUpdate(self):
-        date = datetime.datetime.now()
-        date_str = date.strftime("_%d.%m.%Y")
         target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
-
-        urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
-        page = urlopen(urlVARIANTS)
-        soup = BeautifulSoup(page, 'html.parser')
-        content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
-        content_parent = content.parent.parent
-        totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
+        date = datetime.datetime.today()
+        date_str = date.strftime("_%d.%m.%Y")
+        url = "https://mendel3.bii.a-star.edu.sg/METHODS/corona/gamma/MUTATIONS/data/countryCount_b11529.json"
         color = [int(random.random() * 255), int(random.random() * 255), int(random.random() * 255)]
+        omCountTEXT = ""
+
+        with urlopen(url) as online:
+            onlineData = json.load(online)
+            for countries in onlineData:
+                if countries['country'] == 'Poland':
+                    totalOmicronOnline = countries['total']
+                    shareOfOmicronOnline = countries['percvui_last4wks']
+                    print(countries)
         try:
-            file = open(f'./omicron/omicron{date_str}.txt', 'r', encoding="windows-1250")
-            lastUpdatedCount = int(re.findall(r'\d+', file.read())[3])
+            with open(f'./omicron/omicron{date_str}.json', mode='r') as file:
+                data = json.load(file)
+                for countries in data:
+                    if countries['country'] == 'Poland':
+                        totalOmicron = countries['total']
+                        shareOfOmicron = countries['percvui_last4wks']
+                        print(countries)
         except:
-            lastUpdatedCount = totalOmicronCount
-        if totalOmicronCount != lastUpdatedCount:
-            newOmicronCases = totalOmicronCount - lastUpdatedCount
-            lastUpdatedCount = totalOmicronCount
-            omCountTEXT = ""
+            request.urlretrieve(url, f'./omicron/omicron{date_str}.json')
+            totalOmicron = totalOmicronOnline
+            shareOfOmicron = shareOfOmicronOnline
+
+        if totalOmicronOnline != totalOmicron:
+            print(f'nowy omikron!!!!{totalOmicronOnline - totalOmicron}')
+            request.urlretrieve(url, f'./omicron/omicron{date_str}.json')
+            newOmicronCases = totalOmicronOnline - totalOmicron
+            totalOmicron = totalOmicronOnline
+
             match newOmicronCases:
                 case 1:
                     omCountTEXT = " nowe zakażenie"
@@ -51,22 +62,17 @@ class OmicronData(commands.Cog):
                     omCountTEXT = " nowe zakażenia"
                 case newOmicronCases if 5 <= newOmicronCases:
                     omCountTEXT = " nowych zakażeń"
+
             embed = discord.Embed(
                 title=f'Wykryto {newOmicronCases}{omCountTEXT} wariantem Omikron!<:microbe_2:921081559220629534>',
-                description=f'Całkowita liczba przypadków Omikron to: {totalOmicronCount}',
+                description=f'Całkowita liczba przypadków Omikron to: {totalOmicron} \n Omikron to {shareOfOmicron}% sekwencji',
                 color=discord.Color.from_rgb(color[0], color[1], color[2])
             )
+
             embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
             await message_channel.send(embed=embed)
-            file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
-            file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {lastUpdatedCount}')
-            file.close()
-            print(f'Nowy omikron![{totalOmicronCount}]')
-        else:
-            file = open(f'./omicron/omicron{date_str}.txt', 'w', encoding="windows-1250")
-            file.write(f'Liczba przypadków Omikrona na dzień {date_str} to: {totalOmicronCount}')
-            file.close()
-            print(f'Tyle samo omikrona![{totalOmicronCount}]')
+
+
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
@@ -80,6 +86,42 @@ class OmicronData(commands.Cog):
             future += datetime.timedelta(days=1)
         await asyncio.sleep((future - now).seconds)
 
+    @commands.command()
+    async def omicron(self, ctx):
+        color = [int(random.random() * 255), int(random.random() * 255), int(random.random() * 255)]
+        date = datetime.datetime.today()
+        date_str = date.strftime("_%d.%m.%Y")
+        dateYesterday = date - datetime.timedelta(days=1)
+        dateYesterday_str = dateYesterday.strftime("_%d.%m.%Y")
+
+        with open(f'./omicron/omicron{dateYesterday_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicronYesterday = countries['total']
+        with open(f'./omicron/omicron{date_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicron = countries['total']
+                    shareOfOmicron = countries['percvui_last4wks']
+
+        newOmicronCases = totalOmicron - totalOmicronYesterday
+        if newOmicronCases == 0:
+            zmianaOM = ":arrow_right: Jest to **tyle samo** co wczoraj"
+        else:
+            zmianaOM = f':arrow_up: Jest to o **{newOmicronCases}** więcej niż wczoraj'
+
+        embed = discord.Embed(
+            title=f'Mamy {totalOmicron} zakażeń wariantem omikron <:microbe_2:921081559220629534>',
+            description=f'{zmianaOM} \n\n :warning: Omikron to {shareOfOmicron}% sekwencji',
+            color=discord.Color.from_rgb(color[0], color[1], color[2])
+        )
+
+        await ctx.send(embed=embed)
+
+
+
+
 def setup(bot):
     bot.add_cog(OmicronData(bot))
-

@@ -20,13 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
-      <change afterPath="$PROJECT_DIR$/other.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2021_23_41_[Default_Changelist]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_16_12_2021_23_41__Default_Changelist_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/papiez.py" beforeDir="false" afterPath="$PROJECT_DIR$/papiez.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +51,9 @@
     </file-type-list>
   </component>
   <component name="JupyterTrust" id="5a9dc944-276a-4df5-a52b-ae8c00afc99a" />
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="20KObVBqmPJJsrGqMeVJCcmbNdR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -66,6 +67,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sky\Desktop\Programowanie\Python\botDiscord\covid" />
       <recent name="C:\Users\norbi\OneDrive\Programowansko\botDiscord" />
     </key>
   </component>
@@ -137,6 +139,8 @@
       <workItem from="1640165226302" duration="872000" />
       <workItem from="1640271802508" duration="3570000" />
       <workItem from="1640465109644" duration="6655000" />
+      <workItem from="1640975303245" duration="5304000" />
+      <workItem from="1641072568547" duration="7385000" />
     </task>
     <task id="LOCAL-00032" summary="Update discord.log">
       <created>1639838380658</created>
@@ -497,7 +501,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>
@@ -507,6 +510,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Update discord.log" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1640471729646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1641080440162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

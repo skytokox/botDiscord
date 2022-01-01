@@ -1,6 +1,7 @@
 import asyncio
 import csv
 import datetime
+import json
 import re
 from urllib import request
 from urllib.request import urlopen
@@ -23,28 +24,20 @@ class CovidData(commands.Cog):
 
         date = datetime.datetime.today()
         date_str = date.strftime("_%d.%m.%Y")
+        dateYesterday = date - datetime.timedelta(days=1)
+        dateWEEKAgo = date - datetime.timedelta(weeks=1)
+        dateYesterday_str = dateYesterday.strftime("_%d.%m.%Y")
         target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
 
         urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
         urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
-        urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
 
         local_file_COVID = f'dane_powiat{date_str}.csv'
         local_file_VACCINES = f'szczepienia{date_str}.zip'
         request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
         request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
 
-        page = urlopen(urlVARIANTS)
-        soup = BeautifulSoup(page, 'html.parser')
-        content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
-        content_parent = content.parent.parent
-        totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
-        try:
-            newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
-        except:
-            newOmicronCasesTXT = "0"
-        newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
         zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
         zipinfos = zipdata.infolist()
         for zipinfo in zipinfos:
@@ -52,8 +45,6 @@ class CovidData(commands.Cog):
                 zipinfo.filename = f'./szczepienia/csv/{date.strftime("szczepienia_%d.%m.%Y.csv")}'
                 zipdata.extract(zipinfo)
 
-        dateWEEKAgo = date - datetime.timedelta(weeks=1)
-        dateYesterday = date - datetime.timedelta(days=1)
         with open(f'./covid/dane_powiat_{date.strftime("%d.%m.%Y")}.csv',
                   'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
@@ -113,18 +104,24 @@ class CovidData(commands.Cog):
         else:
             zmianaKW = f':arrow_down: Jest to o **{(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}** mniej niż wczoraj'
 
-        omCountTEXT = ""
-        match totalOmicronCount:
-            case 1:
-                omCountTEXT = "zakażenie"
-            case totalOmicronCount if 2 <= totalOmicronCount <= 4:
-                omCountTEXT = "zakażenia"
-            case totalOmicronCount if 5 <= totalOmicronCount:
-                omCountTEXT = "zakażeń"
+        with open(f'./omicron/omicron{dateYesterday_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicronYesterday = countries['total']
+        with open(f'./omicron/omicron{date_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicron = countries['total']
+                    shareOfOmicron = countries['percvui_last4wks']
+
+        newOmicronCases = totalOmicron - totalOmicronYesterday
         if newOmicronCases == 0:
             zmianaOM = ":arrow_right: Jest to **tyle samo** co wczoraj"
         else:
             zmianaOM = f':arrow_up: Jest to o **{newOmicronCases}** więcej niż wczoraj'
+
 
         embedColor = ""
         match (ilosc_zakazen_100k):
@@ -150,8 +147,8 @@ class CovidData(commands.Cog):
         embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}',
                         inline=False)
         embed.add_field(
-            name=f'Mamy {totalOmicronCount} {omCountTEXT} wariantem omikron <:microbe_2:921081559220629534>',
-            value=f'{zmianaOM}', inline=False)
+            name=f'Mamy {totalOmicron} zakażeń wariantem omikron <:microbe_2:921081559220629534>',
+            value=f'{zmianaOM}\n :warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
         embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}', inline=False)
         embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'{zmianaKW}',
                         inline=False)
@@ -167,7 +164,7 @@ class CovidData(commands.Cog):
         await self.bot.wait_until_ready()
         hour = 9
         minute = 30
-        seconds = 25
+        seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
         print((future - now).seconds)
@@ -181,28 +178,16 @@ class CovidData(commands.Cog):
         date_str = date.strftime("_%d.%m.%Y")
         dateWEEKAgo = date - datetime.timedelta(weeks=1)
         dateYesterday = date - datetime.timedelta(days=1)
+        dateYesterday_str = dateYesterday.strftime("_%d.%m.%Y")
 
         urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
         urlVACCINES = "https://www.arcgis.com/sharing/rest/content/items/3f47db945aff47e582db8aa383ccf3a1/data"
-        urlVARIANTS = "https://newsnodes.com/omicron_tracker#"
 
         local_file_COVID = f'dane_powiat{date_str}.csv'
         local_file_VACCINES = f'szczepienia{date_str}.zip'
         request.urlretrieve(urlCOVID, f'./covid/{local_file_COVID}')
         request.urlretrieve(urlVACCINES, f'./szczepienia/zip/{local_file_VACCINES}')
 
-        page = urlopen(urlVARIANTS)
-        soup = BeautifulSoup(page, 'html.parser')
-        content = soup.find('img', {'src': "/images/flagsxs/PL.png"})
-        content_parent = content.parent.parent
-        totalOmicronCount = int(content_parent.find('td', {"class": "u-text-r"}).text)
-        try:
-            newOmicronCasesTXT = content_parent.find('span', {"style": "font-size: 9px"}).text
-        except:
-            newOmicronCasesTXT = "0"
-
-
-        newOmicronCases = int(re.search(r'\d+', newOmicronCasesTXT).group())
 
         zipdata = ZipFile(date.strftime('./szczepienia/zip/szczepienia_%d.%m.%Y.zip'), 'r')
         zipinfos = zipdata.infolist()
@@ -271,14 +256,19 @@ class CovidData(commands.Cog):
         else:
             zmianaKW = f':arrow_down: Jest to o **{(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}** mniej niż wczoraj'
 
-        omCountTEXT = ""
-        match totalOmicronCount:
-            case 1:
-                omCountTEXT = "zakażenie"
-            case omicronCount if 2 <= omicronCount <= 4:
-                omCountTEXT = "zakażenia"
-            case omicronCount if 5 <= omicronCount:
-                omCountTEXT = "zakażeń"
+        with open(f'./omicron/omicron{dateYesterday_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicronYesterday = countries['total']
+        with open(f'./omicron/omicron{date_str}.json', mode='r') as file:
+            data = json.load(file)
+            for countries in data:
+                if countries['country'] == 'Poland':
+                    totalOmicron = countries['total']
+                    shareOfOmicron = countries['percvui_last4wks']
+
+        newOmicronCases = totalOmicron - totalOmicronYesterday
         if newOmicronCases == 0:
             zmianaOM = ":arrow_right: Jest to **tyle samo** co wczoraj"
         else:
@@ -308,8 +298,8 @@ class CovidData(commands.Cog):
         embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}',
                         inline=False)
         embed.add_field(
-            name=f'Mamy {totalOmicronCount} {omCountTEXT} wariantem omikron <:microbe_2:921081559220629534>',
-            value=f'{zmianaOM}', inline=False)
+            name=f'Mamy {totalOmicron} zakażeń wariantem omikron <:microbe_2:921081559220629534>',
+            value=f'{zmianaOM}\n :warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
         embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}', inline=False)
         embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'{zmianaKW}',
                         inline=False)
