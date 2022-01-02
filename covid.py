@@ -144,12 +144,12 @@ class CovidData(commands.Cog):
             color=embedColor
         )
         embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
-        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}',
+        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}({ilosc_zakazen_WA})',
                         inline=False)
         embed.add_field(
             name=f'Mamy {totalOmicron} zakażeń wariantem omikron <:microbe_2:921081559220629534>',
-            value=f'{zmianaOM}\n :warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
-        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}', inline=False)
+            value=f'{zmianaOM}\n:warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
+        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}({ilosc_zgonow_WA})', inline=False)
         embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'{zmianaKW}',
                         inline=False)
         embed.add_field(name=f'Wykonano {ilosc_testow} testów :bar_chart:',
@@ -295,12 +295,12 @@ class CovidData(commands.Cog):
             color=embedColor
         )
         embed.set_thumbnail(url="https://pbs.twimg.com/profile_images/1069885833656844290/Inl2pghx_400x400.jpg")
-        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}',
+        embed.add_field(name=f'Mamy {ilosc_zakazen} nowych zakażeń :microbe:', value=f'{zmianaZK}({ilosc_zakazen_WA})',
                         inline=False)
         embed.add_field(
             name=f'Mamy {totalOmicron} zakażeń wariantem omikron <:microbe_2:921081559220629534>',
-            value=f'{zmianaOM}\n :warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
-        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}', inline=False)
+            value=f'{zmianaOM}\n:warning: Omikron to {shareOfOmicron}% sekwencji', inline=False)
+        embed.add_field(name=f'Mamy {ilosc_zgonow} nowych zgonów :skull:', value=f'{zmianaZG}({ilosc_zgonow_WA})', inline=False)
         embed.add_field(name=f'Mamy {ilosc_kwarantanna} osób na kwarantannie :mask:', value=f'{zmianaKW}',
                         inline=False)
         embed.add_field(name=f'Wykonano {ilosc_testow} testów :bar_chart:',

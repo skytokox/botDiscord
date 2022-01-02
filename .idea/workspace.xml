@@ -19,11 +19,24 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="Update discord.log">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="ulepszylem aktualizowanie omikrona, powinno byc szybsze i ladniej prezentowane? no cos tego typu">
+      <change afterPath="$PROJECT_DIR$/covid/dane_powiat_01.01.2022.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid/dane_powiat_02.01.2022.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid/dane_powiat_25.12.2021.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid/dane_powiat_26.12.2021.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/covid/dane_powiat_31.12.2021.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/discord_01.01.2022.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/discord_02.01.2022.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logs/discord_31.12.2021.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/szczepienia/csv/szczepienia_01.01.2022.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/szczepienia/csv/szczepienia_02.01.2022.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/szczepienia/zip/szczepienia_01.01.2022.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/szczepienia/zip/szczepienia_02.01.2022.zip" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omicron/omicron_01.01.2022.json" beforeDir="false" afterPath="$PROJECT_DIR$/omicron/omicron_01.01.2022.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/omicron/omicron_02.01.2022.json" beforeDir="false" afterPath="$PROJECT_DIR$/omicron/omicron_02.01.2022.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +76,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -140,14 +153,8 @@
       <workItem from="1640271802508" duration="3570000" />
       <workItem from="1640465109644" duration="6655000" />
       <workItem from="1640975303245" duration="5304000" />
-      <workItem from="1641072568547" duration="7385000" />
-    </task>
-    <task id="LOCAL-00032" summary="Update discord.log">
-      <created>1639838380658</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1639838380658</updated>
+      <workItem from="1641072568547" duration="8068000" />
+      <workItem from="1641129602878" duration="2722000" />
     </task>
     <task id="LOCAL-00033" summary="Update discord.log">
       <created>1639838894508</created>
@@ -485,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640277676841</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="ulepszylem aktualizowanie omikrona, powinno byc szybsze i ladniej prezentowane? no cos tego typu">
+      <created>1641081113927</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1641081113927</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,9 +521,10 @@
       <path value="$PROJECT_DIR$/sussybot" />
     </ignored-roots>
     <MESSAGE value="Update discord.log" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update discord.log" />
+    <MESSAGE value="ulepszylem aktualizowanie omikrona, powinno byc szybsze i ladniej prezentowane? no cos tego typu" />
+    <option name="LAST_COMMIT_MESSAGE" value="ulepszylem aktualizowanie omikrona, powinno byc szybsze i ladniej prezentowane? no cos tego typu" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1641080440162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1641133267074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

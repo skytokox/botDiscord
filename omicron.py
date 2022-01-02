@@ -54,6 +54,7 @@ class OmicronData(commands.Cog):
             request.urlretrieve(url, f'./omicron/omicron{date_str}.json')
             newOmicronCases = totalOmicronOnline - totalOmicron
             totalOmicron = totalOmicronOnline
+            shareOfOmicron = shareOfOmicronOnline
 
             match newOmicronCases:
                 case 1:
@@ -76,8 +77,8 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 0
-        minute = 0
+        hour = 20
+        minute = 00
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)
