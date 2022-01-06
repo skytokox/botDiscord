@@ -1,8 +1,9 @@
 import datetime
 import random
-
+import version
 import discord
-from discord.ext import commands, tasks
+from discord.ext import commands
+from discord.ext.commands import MemberConverter
 
 
 class Other(commands.Cog):
@@ -50,6 +51,8 @@ class Other(commands.Cog):
     @commands.command()
     async def help(self, ctx):
         color = [int(random.random() * 255), int(random.random() * 255), int(random.random() * 255)]
+        sky = await MemberConverter().convert(ctx, "351007376779771904")
+        avek_skaja = sky.avatar_url
         embed = discord.Embed(
             title='Cloudy',
             description='Informacje na temat komend w bocie',
@@ -64,7 +67,7 @@ class Other(commands.Cog):
                         inline=False)
         embed.add_field(name='COVID', value="Komendy związane z COVID", inline=False)
         embed.add_field(name='!covid', value='Pokazuje dzisiejsze statystki dla całego kraju, prawidłowe użycie !covid')
-
+        embed.set_footer(text=f'Bot stworzony przez {sky.name}#{sky.discriminator}, Wersja {version.bot_version}', icon_url=avek_skaja)
         await ctx.send(embed=embed)
 
 
