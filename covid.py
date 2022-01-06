@@ -11,7 +11,6 @@ import discord
 from bs4 import BeautifulSoup
 from discord.ext import commands, tasks
 
-
 class CovidData(commands.Cog):
 
     def __init__(self, bot):
@@ -73,6 +72,7 @@ class CovidData(commands.Cog):
             for row in reader:
                 if "Cały kraj" == row[1]:
                     ilosc_kwarantanna_Wczoraj = int(row[9])
+                    ilosc_zakazen_Wczoraj = int(row[2])
 
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
@@ -157,7 +157,11 @@ class CovidData(commands.Cog):
         embed.add_field(name=f'Wykonano {ilosc_szczepien_dzis} szczepień :syringe:',
                         value=f'W pełni zaszczepionych jest **{ilosc_w_pelni_zaszczepionych}%** Polaków', inline=False)
 
-        await message_channel.send(embed=embed)
+        if ilosc_zakazen != ilosc_zakazen_Wczoraj:
+            await message_channel.send(embed=embed)
+        else:
+            await asyncio.sleep(45)
+            await self.covidUpdate()
 
     @covidUpdate.before_loop
     async def before_my_task(self):
@@ -309,5 +313,7 @@ class CovidData(commands.Cog):
                         value=f'W pełni zaszczepionych jest **{ilosc_w_pelni_zaszczepionych}%** Polaków', inline=False)
 
         await ctx.send(embed=embed)
+
+
 def setup(bot):
     bot.add_cog(CovidData(bot))
