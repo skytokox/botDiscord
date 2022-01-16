@@ -26,7 +26,7 @@ class CovidData(commands.Cog):
         date_str = date.strftime("_%d.%m.%Y")
         dateWEEKAgo = date - datetime.timedelta(weeks=1)
         dateYesterday = date - datetime.timedelta(days=1)
-        target_channel = 923602353809154058
+        target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
 
         urlCOVID = "https://www.arcgis.com/sharing/rest/content/items/6ff45d6b5b224632a672e764e04e8394/data"
