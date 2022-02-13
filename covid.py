@@ -60,7 +60,7 @@ class CovidData(commands.Cog):
                 'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
-                if dateWEEKAgo > datetime.datetime(2022, 2, 6):
+                if dateWEEKAgo > datetime.datetime(2022, 2, 6, 23):
                     if "Cały kraj" == row[1]:
                         cases_count_WA = int(row[4])
                         deaths_count_WA = int(row[8])
