@@ -185,12 +185,12 @@ class CovidData(commands.Cog):
 
         img.save(f'./covid_stats_img/Statystyki{date_str}.png')
         print("Stworzono raport!")
-        if send == "True":
-            if cases_count != cases_count_yesterday:
+        if cases_count != cases_count_yesterday:
+            if send == "True":
                 await message_channel.send(file=discord.File(f'./covid_stats_img/Statystyki{date_str}.png'))
-            else:
-                await asyncio.sleep(15)
-                await self.covidUpdate()
+        else:
+            await asyncio.sleep(15)
+            await self.covidUpdate()
 
     @covidUpdate.before_loop
     async def before_my_task(self):

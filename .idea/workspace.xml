@@ -19,9 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="eee moze to mu pomoze???">
+    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="aha kox pomylilem daty">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,14 +161,7 @@
       <workItem from="1644696210974" duration="1477000" />
       <workItem from="1644701333751" duration="1737000" />
       <workItem from="1644716600588" duration="108000" />
-      <workItem from="1644758362846" duration="2389000" />
-    </task>
-    <task id="LOCAL-00041" summary="Update discord.log">
-      <created>1639931868907</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1639931868907</updated>
+      <workItem from="1644758362846" duration="4853000" />
     </task>
     <task id="LOCAL-00042" summary="Update discord.log">
       <created>1639933347654</created>
@@ -505,7 +499,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644759571799</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="aha kox pomylilem daty">
+      <created>1644761474444</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1644761474444</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -535,9 +536,10 @@
     <MESSAGE value="no ponaprawialem troche bo nuby w MZ popsuli" />
     <MESSAGE value="poprawione v2???" />
     <MESSAGE value="eee moze to mu pomoze???" />
-    <option name="LAST_COMMIT_MESSAGE" value="eee moze to mu pomoze???" />
+    <MESSAGE value="aha kox pomylilem daty" />
+    <option name="LAST_COMMIT_MESSAGE" value="aha kox pomylilem daty" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1644761346881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1644761955939" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -7,13 +7,13 @@ from config import token
 import time
 
 
-date = datetime.datetime.today()
-date_str = date.strftime("_%d.%m.%Y")
-logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename=f'./logs/discord{date_str}.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+# date = datetime.datetime.today()
+# date_str = date.strftime("_%d.%m.%Y")
+# logger = logging.getLogger('discord')
+# logger.setLevel(logging.DEBUG)
+# handler = logging.FileHandler(filename=f'./logs/discord{date_str}.log', encoding='utf-8', mode='w')
+# handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+# logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix="!", help_command=None)
 
