@@ -19,7 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="no naprawilem i generalnie juz powinno normalnie wysylac codzienne dane i nie robic syfu">
+    <list default="true" id="3ba1a879-a7c3-4746-86fc-8c3c52166df7" name="Default Changelist" comment="big update&#10;!covid command now looks way better than before&#10;(ps. maciek musisz pobrac nowa libke w requirements.txt)">
       <change afterPath="$PROJECT_DIR$/covid/dane_powiat_01.01.2022.csv" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/covid/dane_powiat_02.01.2022.csv" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/covid/dane_powiat_25.12.2021.csv" afterDir="false" />
@@ -32,14 +32,13 @@
       <change afterPath="$PROJECT_DIR$/szczepienia/csv/szczepienia_02.01.2022.csv" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/szczepienia/zip/szczepienia_01.01.2022.zip" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/szczepienia/zip/szczepienia_02.01.2022.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/version.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/covid.py" beforeDir="false" afterPath="$PROJECT_DIR$/covid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/covid/dane_powiat_05.12.2021.csv" beforeDir="false" afterPath="$PROJECT_DIR$/covid/dane_powiat_05.12.2021.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron.py" beforeDir="false" afterPath="$PROJECT_DIR$/omicron.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron/omicron_01.01.2022.json" beforeDir="false" afterPath="$PROJECT_DIR$/omicron/omicron_01.01.2022.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron/omicron_02.01.2022.json" beforeDir="false" afterPath="$PROJECT_DIR$/omicron/omicron_02.01.2022.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/omicron/omicron_19.12.2021.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/other.py" beforeDir="false" afterPath="$PROJECT_DIR$/other.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +82,8 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sky\Desktop\Programowanie\Python\botDiscord\covid" />
+      <recent name="C:\Users\sky\Desktop\Programowanie\Python\botDiscord\other" />
+      <recent name="C:\Users\sky\Desktop\Programowanie\Python\botDiscord" />
       <recent name="C:\Users\norbi\OneDrive\Programowansko\botDiscord" />
     </key>
   </component>
@@ -158,28 +159,24 @@
       <workItem from="1641072568547" duration="8068000" />
       <workItem from="1641129602878" duration="2897000" />
       <workItem from="1641222631795" duration="960000" />
-      <workItem from="1641477819037" duration="5123000" />
-    </task>
-    <task id="LOCAL-00035" summary="Update discord.log">
-      <created>1639859390533</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1639859390533</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Update discord.log">
-      <created>1639925182960</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1639925182960</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Update discord.log">
-      <created>1639925386277</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1639925386277</updated>
+      <workItem from="1641477819037" duration="5242000" />
+      <workItem from="1641588033731" duration="25000" />
+      <workItem from="1641676301963" duration="31000" />
+      <workItem from="1641743572895" duration="11211000" />
+      <workItem from="1641843401996" duration="1699000" />
+      <workItem from="1642083784346" duration="4836000" />
+      <workItem from="1642247801905" duration="22000" />
+      <workItem from="1642256846709" duration="14000" />
+      <workItem from="1642256884903" duration="23000" />
+      <workItem from="1642281233012" duration="85000" />
+      <workItem from="1642352900076" duration="7497000" />
+      <workItem from="1642713081092" duration="1887000" />
+      <workItem from="1642720138775" duration="1625000" />
+      <workItem from="1642760399819" duration="606000" />
+      <workItem from="1643458825061" duration="5000" />
+      <workItem from="1644696210974" duration="1477000" />
+      <workItem from="1644701333751" duration="1737000" />
+      <workItem from="1644716600588" duration="39000" />
     </task>
     <task id="LOCAL-00038" summary="Update discord.log">
       <created>1639925976625</created>
@@ -503,7 +500,28 @@
       <option name="project" value="LOCAL" />
       <updated>1641481456430</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="dodalem autora do help i wersje bota zebym wiedzial czy jest aktualne">
+      <created>1641483091449</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1641483091449</updated>
+    </task>
+    <task id="LOCAL-00085" summary="big update&#10;!covid command now looks way better than before&#10;(ps. maciek musisz pobrac nowa libke w requirements.txt)">
+      <created>1642373026917</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1642373026918</updated>
+    </task>
+    <task id="LOCAL-00086" summary="big update&#10;!covid command now looks way better than before&#10;(ps. maciek musisz pobrac nowa libke w requirements.txt)">
+      <created>1642373075860</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1642373075860</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -528,9 +546,11 @@
     <MESSAGE value="ulepszylem aktualizowanie omikrona, powinno byc szybsze i ladniej prezentowane? no cos tego typu" />
     <MESSAGE value="no ee tak" />
     <MESSAGE value="no naprawilem i generalnie juz powinno normalnie wysylac codzienne dane i nie robic syfu" />
-    <option name="LAST_COMMIT_MESSAGE" value="no naprawilem i generalnie juz powinno normalnie wysylac codzienne dane i nie robic syfu" />
+    <MESSAGE value="dodalem autora do help i wersje bota zebym wiedzial czy jest aktualne" />
+    <MESSAGE value="big update&#10;!covid command now looks way better than before&#10;(ps. maciek musisz pobrac nowa libke w requirements.txt)" />
+    <option name="LAST_COMMIT_MESSAGE" value="big update&#10;!covid command now looks way better than before&#10;(ps. maciek musisz pobrac nowa libke w requirements.txt)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1641483012623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/botDiscord$main.coverage" NAME="main Coverage Results" MODIFIED="1644703051622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

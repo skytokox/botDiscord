@@ -19,7 +19,7 @@ class OmicronData(commands.Cog):
         self.bot = bot
         self.omicronUpdate.start()
 
-    @tasks.loop(minutes=15)
+    @tasks.loop(hours=24)
     async def omicronUpdate(self):
         target_channel = 868423228853456966
         message_channel = self.bot.get_channel(target_channel)
@@ -77,8 +77,8 @@ class OmicronData(commands.Cog):
     @omicronUpdate.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 15
-        minute = 45
+        hour = 11
+        minute = 0
         seconds = 0
         now = datetime.datetime.now()
         future = datetime.datetime(now.year, now.month, now.day, hour, minute, seconds)

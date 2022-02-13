@@ -18,10 +18,10 @@ class CovidData(commands.Cog):
         self.covidUpdate.start()
 
     @tasks.loop(hours=24)
-    async def covidUpdate(self):
+    async def covidUpdate(self, send="True"):
 
         img = Image.open('./other/background.png')
-        daySinceStart = (datetime.date.today() - datetime.date(2020, 3, 4)).days
+        daysSinceStart = (datetime.date.today() - datetime.date(2020, 3, 4)).days
         date = datetime.datetime.today()
         date_str = date.strftime("_%d.%m.%Y")
         dateWEEKAgo = date - datetime.timedelta(weeks=1)
@@ -49,30 +49,33 @@ class CovidData(commands.Cog):
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
-                    ilosc_zakazen = int(row[2])
-                    ilosc_zakazen_100k = round(float(row[3]) * 10, 1)
-                    ilosc_zgonow = int(row[4])
-                    ilosc_kwarantanna = int(row[9])
-                    ilosc_testow = int(row[10])
-                    ilosc_pozytywnych_testow = round(int(row[2]) / int(row[10]) * 100, 1)
+                    cases_count = int(row[4])
+                    deaths_count = int(row[8])
+                    people_on_quarantine = int(row[13])
+                    tests_count = int(row[14])
+                    tests_positivity_rate = round(int(row[4]) / int(row[14]) * 100, 1)
 
         with open(
                 f'./covid/dane_powiat_{dateWEEKAgo.strftime("%d.%m.%Y")}.csv',
                 'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
-                if "Cały kraj" == row[1]:
-                    ilosc_zakazen_WA = int(row[2])
-                    ilosc_zgonow_WA = int(row[4])
-
+                if dateWEEKAgo > datetime.datetime(2022, 2, 6):
+                    if "Cały kraj" == row[1]:
+                        cases_count_WA = int(row[4])
+                        deaths_count_WA = int(row[8])
+                else:
+                    if "Cały kraj" == row[1]:
+                        cases_count_WA = int(row[2])
+                        deaths_count_WA = int(row[4])
         with open(
                 f'./covid/dane_powiat_{dateYesterday.strftime("%d.%m.%Y")}.csv',
                 'r', encoding="windows-1250") as file:
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "Cały kraj" == row[1]:
-                    ilosc_kwarantanna_Wczoraj = int(row[9])
-                    ilosc_zakazen_Wczoraj = int(row[2])
+                    people_on_quarantine_yesterday = int(row[13])
+                    cases_count_yesterday = int(row[4])
 
         with open(
                 f'./szczepienia/csv/szczepienia_{date.strftime("%d.%m.%Y")}.csv',
@@ -80,82 +83,37 @@ class CovidData(commands.Cog):
             reader = csv.reader(file, delimiter=";")
             for row in reader:
                 if "liczba_szczepien_ogolem" != row[0]:
-                    ilosc_szczepien_dzis = int(row[1])
-                    ilosc_w_pelni_zaszczepionych = round(int(row[17]) / 38151000 * 100, 1)
+                    vaccinations_today = int(row[1])
+                    people_with_2_doses = round(int(row[17]) / 38151000 * 100, 1)
 
-        if ilosc_zakazen > ilosc_zakazen_WA:
-            zmianaZK = f'Jest to o \n{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100)}% więcej niż\ntydzień temu\n({ilosc_zakazen_WA})'
-        elif ilosc_zakazen == ilosc_zakazen_WA:
-            zmianaZK = f'Bez zmian(tyle samo co tydzień temu)'
+        if cases_count > cases_count_WA:
+            change_in_cases = f'Jest to o \n{round((cases_count / cases_count_WA - 1) * 100)}% więcej niż\ntydzień temu\n({cases_count_WA})'
+        elif cases_count == cases_count_WA:
+            change_in_cases = f'Bez zmian(tyle samo co tydzień temu)'
         else:
-            zmianaZK = f'Jest to o \n{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100) * -1}% mniej niż\ntydzień temu\n({ilosc_zakazen_WA})'
+            change_in_cases = f'Jest to o \n{round((cases_count / cases_count_WA - 1) * 100) * -1}% mniej niż\ntydzień temu\n({cases_count_WA})'
 
-        if ilosc_zgonow > ilosc_zgonow_WA:
-            zmianaZG = f'Jest to o \n{round((ilosc_zgonow / ilosc_zgonow_WA - 1) * 100)}% więcej niż \ntydzień temu\n({ilosc_zgonow_WA})'
-        elif ilosc_zgonow == ilosc_zgonow_WA:
-            zmianaZG = f'Bez zmian(tyle samo co tydzień temu)'
+        if deaths_count > deaths_count_WA:
+            change_in_deaths = f'Jest to o \n{round((deaths_count / deaths_count_WA - 1) * 100)}% więcej niż \ntydzień temu\n({deaths_count_WA})'
+        elif deaths_count == deaths_count_WA:
+            change_in_deaths = f'Bez zmian(tyle samo co tydzień temu)'
         else:
-            zmianaZG = f'Jest to o \n{round((ilosc_zgonow_WA / ilosc_zgonow - 1) * 100)}% mniej niż \ntydzień temu\n({ilosc_zgonow_WA})'
+            change_in_deaths = f'Jest to o \n{round((deaths_count_WA / deaths_count - 1) * 100)}% mniej niż \ntydzień temu\n({deaths_count_WA})'
 
-        if ilosc_kwarantanna > ilosc_kwarantanna_Wczoraj:
-            zmianaKW = f'Jest to o {ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj}\nwięcej niż wczoraj'
-        elif ilosc_kwarantanna == ilosc_kwarantanna_Wczoraj:
-            zmianaKW = f'Bez zmian(tyle samo co wczoraj)'
+        if people_on_quarantine > people_on_quarantine_yesterday:
+            change_in_quarantine = f'Jest to o {people_on_quarantine - people_on_quarantine_yesterday}\nwięcej niż wczoraj'
+        elif people_on_quarantine == people_on_quarantine_yesterday:
+            change_in_quarantine = f'Bez zmian(tyle samo co wczoraj)'
         else:
-            zmianaKW = f'Jest to o {(ilosc_kwarantanna - ilosc_kwarantanna_Wczoraj) * -1}\nmniej niż wczoraj'
+            change_in_quarantine = f'Jest to o {(people_on_quarantine - people_on_quarantine_yesterday) * -1}\nmniej niż wczoraj'
 
         def dateToday():
             today = datetime.date.today()
-            day = today.day
 
-            def weekday(number):
-                match number:
-                    case 0:
-                        return u"Poniedziałek"
-                    case 1:
-                        return u"Wtorek"
-                    case 2:
-                        return u"Środa"
-                    case 3:
-                        return u"Czwartek"
-                    case 4:
-                        return u"Piątek"
-                    case 5:
-                        return u"Sobota"
-                    case 6:
-                        return u"Niedziela"
-
-            def month(number):
-                match number:
-                    case 1:
-                        return u"Stycznia"
-                    case 2:
-                        return u"Lutego"
-                    case 3:
-                        return u"Marca"
-                    case 4:
-                        return u"Kwietnia"
-                    case 5:
-                        return u"Maja"
-                    case 6:
-                        return u"Czerwca"
-                    case 7:
-                        return u"Lipca"
-                    case 8:
-                        return u"Sierpnia"
-                    case 9:
-                        return u"Września"
-                    case 10:
-                        return u"Października"
-                    case 11:
-                        return u"Listopada"
-                    case 12:
-                        return u"Grudnia"
-
-            dayOfWeek = weekday(today.weekday())
-            monthTEXT = month(today.month)
-            year = today.year
-            return f'{dayOfWeek} {day} {monthTEXT} {year}'
+            weekday = [u"Poniedziałek", u"Wtorek", u"Środa", u"Czwartek", u"Piątek", u"Sobota", u"Niedziela"]
+            month = [u"Stycznia", u"Lutego", u"Marca", u"Kwietnia", u"Maja", u"Czerwca", u"Lipca", u"Sierpnia",
+                     u"Września", u"Października", u"Listopada", u"Grudnia"]
+            return f'{weekday[today.weekday()]} {today.day} {month[today.month - 1]} {today.year}'
 
         stats = ImageDraw.Draw(img)
         stats.line((250, 500) + (250, 1000), fill=(255, 255, 255))
@@ -171,7 +129,7 @@ class CovidData(commands.Cog):
 
         p1 = stats.textlength(text=f'{dateToday()}', font=p1_font)
         p1_position = (2500 - p1) / 2
-        p2 = stats.textlength(text=f'{daySinceStart} 'u"dzień pandemii COVID-19 w Polsce", font=p2_font)
+        p2 = stats.textlength(text=f'{daysSinceStart} 'u"dzień pandemii COVID-19 w Polsce", font=p2_font)
         p2_position = (2500 - p2) / 2
         p3 = stats.textlength(text=u"Ilość zakażeń", font=p3_font)
         p3_position = (400 - p3) / 2 + 250
@@ -195,43 +153,44 @@ class CovidData(commands.Cog):
         p12_position = (400 - p12) / 2 + 1850
 
         stats.text((p1_position, 25), f'{dateToday()}', fill=(255, 255, 255), font=p1_font)
-        stats.text((p2_position, 187), f'{daySinceStart} 'u"dzień pandemii COVID-19 w Polsce", fill=(255, 255, 255),
+        stats.text((p2_position, 187), f'{daysSinceStart} 'u"dzień pandemii COVID-19 w Polsce", fill=(255, 255, 255),
                    font=p2_font)
-        stats.multiline_text((p3_position, 527), text=f'Ilość zakażeń\n\n\n{ilosc_zakazen}', font=p3_font,
+        stats.multiline_text((p3_position, 527), text=f'Ilość zakażeń\n\n\n{cases_count}', font=p3_font,
                              fill=(255, 255, 255),
                              align="center")
-        stats.multiline_text((p4_position, 827), zmianaZK, fill=(255, 255, 255), font=p4_font,
+        stats.multiline_text((p4_position, 827), change_in_cases, fill=(255, 255, 255), font=p4_font,
                              align="center")
-        stats.multiline_text((p5_position, 527), text=f'Ilość śmierci\n\n\n{ilosc_zgonow}', font=p3_font,
+        stats.multiline_text((p5_position, 527), text=f'Ilość śmierci\n\n\n{deaths_count}', font=p3_font,
                              fill=(255, 255, 255),
                              align="center")
-        stats.multiline_text((p6_position, 827), zmianaZG, fill=(255, 255, 255), font=p4_font,
+        stats.multiline_text((p6_position, 827), change_in_deaths, fill=(255, 255, 255), font=p4_font,
                              align="center")
-        stats.multiline_text((p7_position, 527), text=f'Ilość szczepień\n\n\n{ilosc_szczepien_dzis}', font=p3_font,
+        stats.multiline_text((p7_position, 527), text=f'Ilość szczepień\n\n\n{vaccinations_today}', font=p3_font,
                              fill=(255, 255, 255),
                              align="center")
         stats.multiline_text((p8_position, 827),
-                             f'W pełni zaszczepionych\n jest {ilosc_w_pelni_zaszczepionych}% Polaków',
+                             f'W pełni zaszczepionych\n jest {people_with_2_doses}% Polaków',
                              fill=(255, 255, 255),
                              font=p4_font, align="center")
-        stats.multiline_text((p9_position, 527), text=f'Ilość osób na\n kwarantannie\n\n{ilosc_kwarantanna}',
+        stats.multiline_text((p9_position, 527), text=f'Ilość osób na\n kwarantannie\n\n{people_on_quarantine}',
                              font=p3_font,
                              fill=(255, 255, 255), align="center")
-        stats.multiline_text((p10_position, 827), zmianaKW, fill=(255, 255, 255), font=p4_font,
+        stats.multiline_text((p10_position, 827), change_in_quarantine, fill=(255, 255, 255), font=p4_font,
                              align="center")
-        stats.multiline_text((p11_position, 527), text=f'Ilość zrobionych\ntestów\n\n{ilosc_testow}', font=p3_font,
+        stats.multiline_text((p11_position, 527), text=f'Ilość zrobionych\ntestów\n\n{tests_count}', font=p3_font,
                              fill=(255, 255, 255), align="center")
-        stats.multiline_text((p12_position, 827), f'w tym {ilosc_pozytywnych_testow}% jest\npozytywnych',
+        stats.multiline_text((p12_position, 827), f'w tym {tests_positivity_rate}% jest\npozytywnych',
                              fill=(255, 255, 255), font=p4_font,
                              align="center")
 
         img.save(f'./covid_stats_img/Statystyki{date_str}.png')
-
-        if ilosc_zakazen != ilosc_zakazen_Wczoraj:
-            await message_channel.send(file=discord.File(f'./covid_stats_img/Statystyki{date_str}.png'))
-        else:
-            await asyncio.sleep(15)
-            await self.covidUpdate()
+        print("Stworzono raport!")
+        if send == "True":
+            if cases_count != cases_count_yesterday:
+                await message_channel.send(file=discord.File(f'./covid_stats_img/Statystyki{date_str}.png'))
+            else:
+                await asyncio.sleep(15)
+                await self.covidUpdate()
 
     @covidUpdate.before_loop
     async def before_my_task(self):
@@ -262,117 +221,120 @@ class CovidData(commands.Cog):
                 await ctx.send(file=img_stats)
 
     @commands.command()
-    async def wojewodztwa(self, ctx):
-        date = datetime.datetime.now()
-        date_str = date.strftime("_%d.%m.%Y")
-        dateWA = date - datetime.timedelta(weeks=1)
-        dateWA_str = dateWA.strftime("_%d.%m.%Y")
-
-        def voidvodshipsName(voidvodship):
-            match (voidvodship):
-                case 'Cały kraj':
-                    return "W całym kraju"
-                case 'mazowieckie':
-                    return "W mazowieckim"
-                case 'małopolskie':
-                    return "W małopolskim"
-                case 'śląskie':
-                    return "W śląskim"
-                case 'dolnośląskie':
-                    return "W dolnośląśkim"
-                case 'wielkopolskie':
-                    return "W wielkopolskim"
-                case 'pomorskie':
-                    return 'W pomorskim'
-                case 'łódzkie':
-                    return "W łódzkim"
-                case 'świętokrzyskie':
-                    return 'W świętokrzyskim'
-                case 'zachodniopomorskie':
-                    return "W zachodniopomorskim"
-                case 'podkarpackie':
-                    return "W podkarpackim"
-                case 'lubelskie':
-                    return "W lubelskim"
-                case 'lubuskie':
-                    return "W lubuskim"
-                case 'podlaskie':
-                    return "W podlaskim"
-                case 'kujawsko-pomorskie':
-                    return "W kujawsko-pomorskim"
-                case 'opolskie':
-                    return "W opolskim"
-                case 'warmińsko-mazurskie':
-                    return "W warmińsko-mazurskim"
-                case 'W całym kraju':
-                    return "W całym kraju"
-
-        urlVoidvodships = "https://www.arcgis.com/sharing/rest/content/items/153a138859bb4c418156642b5b74925b/data"
-        local_file_COVID = f'covid_voidvodships/dane_wojewodztwa'
-
-        request.urlretrieve(urlVoidvodships, f'{local_file_COVID}{date_str}.csv')
-
-        with open(f'{local_file_COVID}{date_str}.csv', mode='r', encoding="windows-1250") as file:
-            reader = csv.reader(file, delimiter=";")
-            for row in reader:
-                if row[0] == 'Cały kraj':
-                    ilosc_zakazen_100k = round(float(row[3]) * 10, 1)
-
-        embedColor = ""
-        match (ilosc_zakazen_100k):
-            case ilosc_zakazen_100k if ilosc_zakazen_100k <= 2:
-                embedColor = 0xadd8e6
-            case ilosc_zakazen_100k if 2 < ilosc_zakazen_100k <= 10:
-                embedColor = 0x00c400
-            case ilosc_zakazen_100k if 10 < ilosc_zakazen_100k <= 25:
-                embedColor = 0xffff00
-            case ilosc_zakazen_100k if 25 < ilosc_zakazen_100k <= 50:
-                embedColor = 0xff3333
-            case ilosc_zakazen_100k if 50 < ilosc_zakazen_100k <= 70:
-                embedColor = 0x9a009a
-            case ilosc_zakazen_100k if 70 < ilosc_zakazen_100k:
-                embedColor = 0x292929
-
-        embed = discord.Embed(
-            title="COVID-19",
-            description="Dzisiejsze statystyki COVID-19 z podziałem na województwa",
-            color=embedColor
-        )
-        voidvodships = {}
-        voidvodshipsWA = {}
-        with open(f'{local_file_COVID}{date_str}.csv', mode='r', encoding="windows-1250") as file:
-            reader = csv.reader(file, delimiter=";")
-            for row in reader:
-                if row[0] != 'wojewodztwo':
-                    voidvodships[row[0]] = int(row[1])
-
-        with open(f'{local_file_COVID}{dateWA_str}.csv', mode='r', encoding="windows-1250") as file:
-            reader = csv.reader(file, delimiter=";")
-            for row in reader:
-                if row[0] != 'wojewodztwo':
-                    voidvodshipsWA[row[0]] = int(row[1])
-
-        print(voidvodships)
-        print(voidvodships['mazowieckie'])
-        voidvodships_sorted = sorted(voidvodships.items(), key=lambda item: item[1])
-        voidvodships_sorted.reverse()
-
-        for voidvodship in voidvodships_sorted:
-
-            ilosc_zakazen = voidvodships[f'{voidvodship[0]}']
-            ilosc_zakazen_WA = voidvodshipsWA[f'{voidvodship[0]}']
-
-            if ilosc_zakazen > ilosc_zakazen_WA:
-                weekChange = f':arrow_up: Jest to o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100)}%** więcej niż tydzień temu'
-            elif ilosc_zakazen == ilosc_zakazen_WA:
-                weekChange = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
-            else:
-                weekChange = f':arrow_down: Jest to o **{round((ilosc_zakazen / ilosc_zakazen_WA - 1) * 100) * -1}%** mniej niż tydzień temu'
-
-            embed.add_field(name=f'{voidvodshipsName(voidvodship[0])} mamy {voidvodship[1]} zakażeń',
-                            value=f'jest to o {weekChange}', inline=False)
-
-        await ctx.send(embed=embed)
+    async def create_file(self, ctx):
+        await self.covidUpdate(send="False")
+    # @commands.command()
+    # async def wojewodztwa(self, ctx):
+    #     date = datetime.datetime.now()
+    #     date_str = date.strftime("_%d.%m.%Y")
+    #     dateWA = date - datetime.timedelta(weeks=1)
+    #     dateWA_str = dateWA.strftime("_%d.%m.%Y")
+    #
+    #     def voidvodshipsName(voidvodship):
+    #         match (voidvodship):
+    #             case 'Cały kraj':
+    #                 return "W całym kraju"
+    #             case 'mazowieckie':
+    #                 return "W mazowieckim"
+    #             case 'małopolskie':
+    #                 return "W małopolskim"
+    #             case 'śląskie':
+    #                 return "W śląskim"
+    #             case 'dolnośląskie':
+    #                 return "W dolnośląśkim"
+    #             case 'wielkopolskie':
+    #                 return "W wielkopolskim"
+    #             case 'pomorskie':
+    #                 return 'W pomorskim'
+    #             case 'łódzkie':
+    #                 return "W łódzkim"
+    #             case 'świętokrzyskie':
+    #                 return 'W świętokrzyskim'
+    #             case 'zachodniopomorskie':
+    #                 return "W zachodniopomorskim"
+    #             case 'podkarpackie':
+    #                 return "W podkarpackim"
+    #             case 'lubelskie':
+    #                 return "W lubelskim"
+    #             case 'lubuskie':
+    #                 return "W lubuskim"
+    #             case 'podlaskie':
+    #                 return "W podlaskim"
+    #             case 'kujawsko-pomorskie':
+    #                 return "W kujawsko-pomorskim"
+    #             case 'opolskie':
+    #                 return "W opolskim"
+    #             case 'warmińsko-mazurskie':
+    #                 return "W warmińsko-mazurskim"
+    #             case 'W całym kraju':
+    #                 return "W całym kraju"
+    #
+    #     urlVoidvodships = "https://www.arcgis.com/sharing/rest/content/items/153a138859bb4c418156642b5b74925b/data"
+    #     local_file_COVID = f'covid_voidvodships/dane_wojewodztwa'
+    #
+    #     request.urlretrieve(urlVoidvodships, f'{local_file_COVID}{date_str}.csv')
+    #
+    #     with open(f'{local_file_COVID}{date_str}.csv', mode='r', encoding="windows-1250") as file:
+    #         reader = csv.reader(file, delimiter=";")
+    #         for row in reader:
+    #             if row[0] == 'Cały kraj':
+    #                 cases_count_100k = round(float(row[3]) * 10, 1)
+    #
+    #     embedColor = ""
+    #     match (cases_count_100k):
+    #         case cases_count_100k if cases_count_100k <= 2:
+    #             embedColor = 0xadd8e6
+    #         case cases_count_100k if 2 < cases_count_100k <= 10:
+    #             embedColor = 0x00c400
+    #         case cases_count_100k if 10 < cases_count_100k <= 25:
+    #             embedColor = 0xffff00
+    #         case cases_count_100k if 25 < cases_count_100k <= 50:
+    #             embedColor = 0xff3333
+    #         case cases_count_100k if 50 < cases_count_100k <= 70:
+    #             embedColor = 0x9a009a
+    #         case cases_count_100k if 70 < cases_count_100k:
+    #             embedColor = 0x292929
+    #
+    #     embed = discord.Embed(
+    #         title="COVID-19",
+    #         description="Dzisiejsze statystyki COVID-19 z podziałem na województwa",
+    #         color=embedColor
+    #     )
+    #     voidvodships = {}
+    #     voidvodshipsWA = {}
+    #     with open(f'{local_file_COVID}{date_str}.csv', mode='r', encoding="windows-1250") as file:
+    #         reader = csv.reader(file, delimiter=";")
+    #         for row in reader:
+    #             if row[0] != 'wojewodztwo':
+    #                 voidvodships[row[0]] = int(row[1])
+    #
+    #     with open(f'{local_file_COVID}{dateWA_str}.csv', mode='r', encoding="windows-1250") as file:
+    #         reader = csv.reader(file, delimiter=";")
+    #         for row in reader:
+    #             if row[0] != 'wojewodztwo':
+    #                 voidvodshipsWA[row[0]] = int(row[1])
+    #
+    #     print(voidvodships)
+    #     print(voidvodships['mazowieckie'])
+    #     voidvodships_sorted = sorted(voidvodships.items(), key=lambda item: item[1])
+    #     voidvodships_sorted.reverse()
+    #
+    #     for voidvodship in voidvodships_sorted:
+    #
+    #         cases_count = voidvodships[f'{voidvodship[0]}']
+    #         cases_count_WA = voidvodshipsWA[f'{voidvodship[0]}']
+    #
+    #         if cases_count > cases_count_WA:
+    #             weekChange = f':arrow_up: Jest to o **{round((cases_count / cases_count_WA - 1) * 100)}%** więcej niż tydzień temu'
+    #         elif cases_count == cases_count_WA:
+    #             weekChange = f':arrow_right: Bez zmian(tyle samo co tydzień temu)'
+    #         else:
+    #             weekChange = f':arrow_down: Jest to o **{round((cases_count / cases_count_WA - 1) * 100) * -1}%** mniej niż tydzień temu'
+    #
+    #         embed.add_field(name=f'{voidvodshipsName(voidvodship[0])} mamy {voidvodship[1]} zakażeń',
+    #                         value=f'jest to o {weekChange}', inline=False)
+    #
+    #     await ctx.send(embed=embed)
 
 
 
