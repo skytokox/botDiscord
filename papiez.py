@@ -23,7 +23,7 @@ class papiez(commands.Cog):
     @ping2137.before_loop
     async def before_my_task(self):
         await self.bot.wait_until_ready()
-        hour = 20
+        hour = 19
         minute = 37
         seconds = 0
         now = datetime.datetime.now()
